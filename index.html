@@ -50,6 +50,7 @@
   .card-title{ font-size:15.5px; font-weight:700; display:flex; align-items:center; gap:8px; }
   .card-desc{ font-size:13px; color:var(--ink-dim); margin-top:4px; }
   .card-path{ font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); margin-top:6px; }
+  .card-path .updated{ color:var(--accent-ink); }
   .status{
     font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-faint);
     background:var(--bg-sunk); padding:2px 8px; border-radius:20px; margin-left:auto; white-space:nowrap;
@@ -71,32 +72,56 @@
 <body>
 <div class="page">
 
-  <div class="eyebrow">Documentation Hub</div>
+  <div class="eyebrow">Documentation Hub <span id="pageUpdated"></span></div>
   <h1>프로젝트 문서 허브</h1>
   <p class="lede">프로젝트별 기획서·개발 기록·사용자 가이드를 각자의 독립된 문서 사이트로 모아두는 곳. 새 프로젝트 문서 사이트가 생기면 아래에 카드 하나씩 추가.</p>
 
   <div class="grid">
-    <a class="card" href="https://peter-cho-70.github.io/mars-master-docs/">
+    <a class="card" href="https://peter-cho-70.github.io/mars-master-docs/" data-check="https://peter-cho-70.github.io/mars-master-docs/doc/STATUS.md">
       <div class="card-title">📡 MARS / Master <span class="status">문서 사이트</span></div>
       <div class="card-desc">뉴스 방송 자동화 시스템 — PRD, 아키텍처, 장비 연동 가이드, 개발 히스토리 회고, 바이브 코딩 교재.</div>
-      <div class="card-path">mars-master-docs</div>
+      <div class="card-path">mars-master-docs <span class="updated" data-updated></span></div>
     </a>
-    <a class="card" href="https://peter-cho-70.github.io/newscontrol-docs/">
+    <a class="card" href="https://peter-cho-70.github.io/newscontrol-docs/" data-check="https://peter-cho-70.github.io/newscontrol-docs/doc/DEVLOG.md">
       <div class="card-title">🗞 NewsControl <span class="status">문서 사이트</span></div>
       <div class="card-desc">보도기술팀 업무 관리 시스템 — PRD, 실행 방법·전광판 표시 규칙(README), 개발 기록(DEVLOG).</div>
-      <div class="card-path">newscontrol-docs</div>
+      <div class="card-path">newscontrol-docs <span class="updated" data-updated></span></div>
     </a>
   </div>
 
   <div class="add-note">
-    새 프로젝트 문서를 추가하려면: ① 그 프로젝트에서 <code>doc/</code>(index.html·viewer.html·*.md)를 만들고 ② <code>&lt;project&gt;-docs</code> public 저장소로 푸시 후 GitHub Pages(main·/) 활성화 ③ 이 파일(<code>index.html</code>)에 카드 하나 추가.
+    새 프로젝트 문서를 추가하려면: ① 그 프로젝트에서 <code>doc/</code>(index.html·viewer.html·*.md)를 만들고 ② <code>&lt;project&gt;-docs</code> public 저장소로 푸시 후 GitHub Pages(main·/) 활성화 ③ 이 파일(<code>index.html</code>)에 카드 하나(와 <code>data-check</code> 대상 문서)를 추가.
   </div>
 
   <footer>
     <span>peter-cho-70.github.io — 개인 프로젝트 문서 허브</span>
-    <span>정리일 2026-07-11</span>
   </footer>
 
 </div>
+<script>
+// 각 카드의 "최종 갱신"은 그 프로젝트에서 가장 자주 바뀌는 문서(data-check)를 같은 오리진(github.io)에서
+// HEAD로 조회해 Last-Modified를 그대로 표시한다 — 이 허브 파일에 날짜를 손으로 적어두면
+// 프로젝트가 갱신돼도 여기서는 계속 옛 날짜로 남는 문제가 생기기 때문에, 실측값을 쓴다.
+(function(){
+  document.querySelectorAll('a.card[data-check]').forEach(function(card){
+    fetch(card.dataset.check, { method: 'HEAD' })
+      .then(function(r){
+        var lm = r.headers.get('last-modified');
+        if (!lm) return;
+        var d = new Date(lm);
+        if (isNaN(d.getTime())) return;
+        var y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+        var el = card.querySelector('[data-updated]');
+        if (el) el.textContent = '· 최종 갱신 ' + y + '-' + m + '-' + day;
+      })
+      .catch(function(){});
+  });
+  var d = new Date(document.lastModified);
+  if (!isNaN(d.getTime())) {
+    var y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+    document.getElementById('pageUpdated').textContent = '· 허브 페이지 갱신 ' + y + '-' + m + '-' + day;
+  }
+})();
+</script>
 </body>
 </html>
