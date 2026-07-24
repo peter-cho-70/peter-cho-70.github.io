@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>조충남 개인</title>
+<style>
+  :root{
+    --bg:#eef1ef; --bg-raised:#ffffff; --bg-sunk:#e4e8e5;
+    --ink:#15201d; --ink-dim:#56635f; --ink-faint:#8b968f;
+    --accent:#a06a12; --accent-ink:#5c3d0a;
+    --line:rgba(21,32,29,.14); --line-strong:rgba(21,32,29,.28);
+    --shadow: 0 1px 2px rgba(21,32,29,.06), 0 8px 24px rgba(21,32,29,.05);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0c1012; --bg-raised:#141b1e; --bg-sunk:#0a0e10;
+      --ink:#e8ece9; --ink-dim:#9aa6a2; --ink-faint:#5e6a66;
+      --accent:#e2a63d; --accent-ink:#f4c877;
+      --line:rgba(232,236,233,.12); --line-strong:rgba(232,236,233,.24);
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  ::selection{ background:var(--accent); color:var(--bg-sunk); }
+
+  .page{ max-width:820px; margin:0 auto; padding:56px 22px 100px; }
+
+  .back{ font-family:var(--mono); font-size:11px; color:var(--ink-faint); text-decoration:none; }
+  .back:hover{ color:var(--accent-ink); }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-ink); display:flex; align-items:center; gap:8px; margin:18px 0 10px;
+  }
+  .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; }
+
+  h1{ font-size:clamp(24px,3.4vw,32px); line-height:1.3; margin:0 0 8px; font-weight:800; letter-spacing:-.01em; }
+  .lede{ color:var(--ink-dim); font-size:14px; max-width:64ch; margin:0 0 6px; }
+
+  h2.section{ font-size:13px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin:40px 0 12px; }
+
+  .grid{ display:flex; flex-direction:column; gap:12px; }
+  a.card{
+    display:block; padding:18px 20px; border:1px solid var(--line); border-radius:10px;
+    background:var(--bg-raised); box-shadow:var(--shadow);
+    text-decoration:none; color:var(--ink); transition:border-color .12s;
+  }
+  a.card:hover{ border-color:var(--accent); }
+  a.card:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .card-title{ font-size:15.5px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .card-desc{ font-size:13px; color:var(--ink-dim); margin-top:4px; }
+  .card-path{ font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); margin-top:6px; }
+  .card-path .updated{ color:var(--accent-ink); }
+  .status{
+    font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-faint);
+    background:var(--bg-sunk); padding:2px 8px; border-radius:20px; margin-left:auto; white-space:nowrap;
+  }
+
+  footer{
+    margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11px; color:var(--ink-faint);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back" href="../index.html">← 문서 허브</a>
+
+  <div class="eyebrow">Personal</div>
+  <h1>조충남 개인</h1>
+  <p class="lede">프로젝트 문서에 속하지 않는 개인 메모·계획 자료 모음.</p>
+
+  <h2 class="section">도쿄 여행 노선도 · 8/10 – 8/15</h2>
+  <div class="grid">
+    <a class="card" href="tokyo_itinerary_2.html">
+      <div class="card-title">🗼 도쿄 여행 노선도 <span class="status">최종본</span></div>
+      <div class="card-desc">일별 동선·비용 표 포함. 가장 최근에 다듬은 버전.</div>
+      <div class="card-path">personal/tokyo_itinerary_2.html <span class="updated" data-updated></span></div>
+    </a>
+    <a class="card" href="tokyo_itinerary_1.html">
+      <div class="card-title">🗼 도쿄 여행 노선도 <span class="status">수정본</span></div>
+      <div class="card-desc">초안에 일별 비용 표를 추가하고 동선 설명을 다듬은 중간 버전.</div>
+      <div class="card-path">personal/tokyo_itinerary_1.html <span class="updated" data-updated></span></div>
+    </a>
+    <a class="card" href="tokyo_itinerary.html">
+      <div class="card-title">🗼 도쿄 여행 노선도 <span class="status">초안</span></div>
+      <div class="card-desc">가장 처음 만든 버전.</div>
+      <div class="card-path">personal/tokyo_itinerary.html <span class="updated" data-updated></span></div>
+    </a>
+  </div>
+
+  <footer>
+    <span>peter-cho-70.github.io/personal — 조충남 개인</span>
+  </footer>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('a.card').forEach(function(card){
+    fetch(card.getAttribute('href'), { method: 'HEAD' })
+      .then(function(r){
+        var lm = r.headers.get('last-modified');
+        if (!lm) return;
+        var d = new Date(lm);
+        if (isNaN(d.getTime())) return;
+        var y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+        var el = card.querySelector('[data-updated]');
+        if (el) el.textContent = '· 최종 갱신 ' + y + '-' + m + '-' + day;
+      })
+      .catch(function(){});
+  });
+})();
+</script>
+</body>
+</html>
