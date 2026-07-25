@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도쿄 여행 노선도 · 8/10 - 8/15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14161b;
+    --card:#1c1f26;
+    --card-2:#20242c;
+    --line:#2c313b;
+    --text:#eeece5;
+    --muted:#9aa0ab;
+    --d1:#f39700; /* 긴자선 오렌지 - 아사쿠사 */
+    --d2:#ffd400; /* 소부선 옐로우 - 아키하바라 */
+    --d3:#0089cf; /* 도부 스카이트리라인 블루 - 스카이트리 */
+    --d4:#80c241; /* 야마노테선 그린 - 시부야/하라주쿠/신주쿠 */
+    --d5:#00a7db; /* 유리카모메 틸 - 오다이바 */
+    --d6:#e5006a; /* 케이세이 마젠타 - 출국 */
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Space Grotesk',sans-serif;}
+
+  header{
+    padding:48px 24px 32px;
+    max-width:920px;
+    margin:0 auto;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(28px,5vw,44px);
+    margin:0 0 10px;
+    line-height:1.15;
+  }
+  .sub{color:var(--muted);font-size:15px;line-height:1.7;margin:0;}
+  .flightbar{
+    display:flex;flex-wrap:wrap;gap:10px;
+    margin-top:22px;
+  }
+  .chip{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:8px 16px;
+    font-size:13px;
+    color:var(--text);
+    display:flex;align-items:center;gap:8px;
+  }
+  .chip b{font-family:'Space Grotesk',sans-serif;}
+
+  main{max-width:920px;margin:0 auto;padding:0 24px 80px;}
+
+  /* day nav */
+  .daynav{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    overflow-x:auto;
+    padding:24px 0;
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    z-index:10;
+    border-bottom:1px solid var(--line);
+    margin-bottom:32px;
+  }
+  .daynav label{
+    flex:0 0 auto;
+    cursor:pointer;
+    padding:10px 16px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--card);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--muted);
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  input[type=radio]{display:none;}
+  #t1:checked ~ .daynav label[for=t1],
+  #t2:checked ~ .daynav label[for=t2],
+  #t3:checked ~ .daynav label[for=t3],
+  #t4:checked ~ .daynav label[for=t4],
+  #t5:checked ~ .daynav label[for=t5],
+  #t6:checked ~ .daynav label[for=t6],
+  #t7:checked ~ .daynav label[for=t7],
+  #t8:checked ~ .daynav label[for=t8],
+  #t9:checked ~ .daynav label[for=t9],
+  #t10:checked ~ .daynav label[for=t10]{
+    color:#0a0a0a;
+  }
+  #t1:checked ~ .daynav label[for=t1]{background:var(--d1);border-color:var(--d1);}
+  #t2:checked ~ .daynav label[for=t2]{background:var(--d2);border-color:var(--d2);}
+  #t3:checked ~ .daynav label[for=t3]{background:var(--d3);border-color:var(--d3);color:#fff;}
+  #t4:checked ~ .daynav label[for=t4]{background:var(--d4);border-color:var(--d4);}
+  #t5:checked ~ .daynav label[for=t5]{background:var(--d5);border-color:var(--d5);color:#fff;}
+  #t6:checked ~ .daynav label[for=t6]{background:var(--d6);border-color:var(--d6);color:#fff;}
+  #t7:checked ~ .daynav label[for=t7]{background:#7b8cff;border-color:#7b8cff;color:#fff;}
+  #t8:checked ~ .daynav label[for=t8]{background:#2dd4bf;border-color:#2dd4bf;}
+  #t9:checked ~ .daynav label[for=t9]{background:#f59e0b;border-color:#f59e0b;}
+  #t10:checked ~ .daynav label[for=t10]{background:#ec4899;border-color:#ec4899;color:#fff;}
+
+  .panel{display:none;}
+  #t1:checked ~ main #p1,
+  #t2:checked ~ main #p2,
+  #t3:checked ~ main #p3,
+  #t4:checked ~ main #p4-wrap,
+  #t5:checked ~ main #p5-wrap,
+  #t6:checked ~ main #p6-wrap,
+  #t7:checked ~ main #p7,
+  #t8:checked ~ main #p8,
+  #t9:checked ~ main #p9,
+  #t10:checked ~ main #p10{display:block;}
+
+  .daytitle{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap;
+  }
+  .daytitle .badge{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    padding:4px 10px;
+    border-radius:6px;
+    color:#0a0a0a;
+  }
+  .daytitle h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:22px;margin:0;font-weight:700;
+  }
+  .daydesc{color:var(--muted);font-size:14px;margin:0 0 16px;}
+
+  /* 코스 선택 카드 */
+  .course-select{
+    max-width:920px;margin:28px auto 0;padding:0 24px;
+  }
+  .course-select .cs-label{
+    font-family:'Space Grotesk',sans-serif;letter-spacing:.1em;text-transform:uppercase;
+    font-size:11px;color:var(--muted);margin-bottom:10px;
+  }
+  .cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  @media (max-width:700px){.cs-grid{grid-template-columns:1fr;}}
+  .cs-card{
+    cursor:pointer;background:var(--card);border:2px solid var(--line);border-radius:14px;
+    padding:16px 18px;transition:all .15s ease;
+  }
+  .cs-card input[type="radio"]{display:none;}
+  .cs-card .cs-title{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14.5px;margin-bottom:5px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .cs-card .cs-desc{color:var(--muted);font-size:12.5px;line-height:1.5;}
+  .cs-card[data-active="true"]{border-color:var(--dot,#7b8cff);background:var(--card-2);}
+  .cs-card[data-active="true"] .cs-title{color:var(--dot,#7b8cff);}
+  .cs-card:hover{border-color:#454c5a;}
+
+  .routebtns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+  .routebtn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;
+    color:#0a0a0a;background:var(--dot,#7b8cff);
+    padding:9px 16px;border-radius:8px;text-decoration:none;
+  }
+  .routebtn:hover{filter:brightness(1.08);}
+
+  /* timeline */
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{
+    content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;
+    background:var(--line);
+  }
+  .stop{position:relative;padding-bottom:30px;}
+  .stop:last-child{padding-bottom:0;}
+  .stop::before{
+    content:"";position:absolute;left:-28px;top:4px;width:14px;height:14px;
+    border-radius:50%;border:3px solid var(--bg);background:var(--dot,#7b8cff);
+  }
+  .stop .time{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--muted);
+    margin-bottom:4px;
+  }
+  .stop .name{
+    font-size:16px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .stop .name a{
+    color:inherit;text-decoration:none;border-bottom:1px solid currentColor;
+  }
+  .maplink{
+    display:inline-flex;align-items:center;gap:4px;
+    font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;
+    color:var(--dot,#7b8cff);text-decoration:none;
+    border:1px solid var(--line);border-radius:999px;padding:3px 10px;
+  }
+  .stop .desc{color:#c9cdd6;font-size:14px;line-height:1.6;margin-bottom:6px;}
+  .stop .cost{
+    display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:12.5px;
+    color:#ffcf6b;background:rgba(255,207,107,.08);
+    border:1px solid rgba(255,207,107,.25);
+    padding:3px 10px;border-radius:6px;margin-right:6px;margin-top:2px;
+  }
+  .stop .transit{
+    margin-top:10px;padding:10px 12px;background:var(--card);border:1px dashed var(--line);
+    border-radius:8px;font-size:13px;color:var(--muted);
+  }
+  .stop .transit b{color:var(--text);}
+
+  .daycost{
+    margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+  }
+  .daycost h3{font-family:'Space Grotesk',sans-serif;font-size:13px;margin:0 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+  .daycost table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .daycost td{padding:6px 4px;border-bottom:1px solid var(--line);}
+  .daycost td.num{text-align:right;font-family:'Space Grotesk',sans-serif;color:#ffcf6b;white-space:nowrap;}
+  .daycost tr.total td{border-top:1px solid var(--line);border-bottom:none;font-weight:700;color:var(--text);padding-top:10px;}
+  .daycost tr.total td.num{color:#ffcf6b;font-size:14.5px;}
+
+  /* Day 4/5/6 옵션 버전 전환: 래퍼(#p4-wrap 등)는 탭 시스템이 표시 여부를 담당하고,
+     내부 버전들은 자바스크립트가 선택된 코스에 맞는 것만 전환함 */
+  #p4-wrap, #p5-wrap, #p6-wrap{display:none;}
+  #p4-original, #p4-enoshima,
+  #p5-original, #p5-enoshima,
+  #p6-original, #p6-compensate{display:none;}
+
+  section.info{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin-bottom:16px;
+  }
+  section.info h3{
+    font-family:'Space Grotesk',sans-serif;font-size:15px;margin:0 0 10px;
+  }
+  section.info p{margin:0;color:#c9cdd6;font-size:14px;line-height:1.7;}
+
+  /* 팁 카테고리 헤더 */
+  .tipcat{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;
+    margin:34px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line);
+    display:flex;align-items:center;gap:8px;
+  }
+  .tipcat:first-of-type{margin-top:8px;}
+  section.info h4{
+    font-family:'Noto Sans KR',sans-serif;font-size:14px;margin:14px 0 4px;color:var(--text);
+  }
+  section.info h4:first-child{margin-top:0;}
+
+  /* 체크리스트 */
+  .checklist{list-style:none;margin:0;padding:0;}
+  .checklist li{margin:0;}
+  .checklist label{
+    display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+    padding:9px 4px;border-bottom:1px solid var(--line);font-size:14px;line-height:1.5;
+  }
+  .checklist li:last-child label{border-bottom:none;}
+  .checklist input[type="checkbox"]{
+    appearance:none;-webkit-appearance:none;
+    flex:0 0 auto;width:19px;height:19px;margin-top:1px;
+    border:2px solid #4a5160;border-radius:5px;background:transparent;
+    cursor:pointer;position:relative;transition:all .12s ease;
+  }
+  .checklist input[type="checkbox"]:checked{
+    background:#f59e0b;border-color:#f59e0b;
+  }
+  .checklist input[type="checkbox"]:checked::after{
+    content:"✓";position:absolute;left:2px;top:-3px;color:#0a0a0a;font-size:14px;font-weight:900;
+  }
+  .checklist input[type="checkbox"]:checked + span{
+    color:var(--muted);text-decoration:line-through;
+  }
+  .checklist .tag{
+    display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:600;
+    padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:middle;
+    background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.3);
+  }
+  .checklist .tag.essential{background:rgba(239,68,68,.12);color:#f87171;border-color:rgba(239,68,68,.3);}
+  .checklist .note{color:var(--muted);font-size:12.5px;}
+
+  /* 브랜드/상점 카드 */
+  .brandgrid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:6px;
+  }
+  .brandcard{
+    background:var(--card-2);border:1px solid var(--line);border-radius:12px;
+    padding:14px;display:flex;flex-direction:column;gap:8px;
+  }
+  .brandcard .logo{
+    height:44px;display:flex;align-items:center;justify-content:flex-start;
+  }
+  .brandcard .bname{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .brandcard .bname .jp{color:var(--muted);font-size:12px;font-weight:400;}
+  .brandcard .bdesc{color:#c9cdd6;font-size:12.5px;line-height:1.55;margin:0;}
+  .brandcard .btag{
+    display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;
+    padding:2px 8px;border-radius:999px;align-self:flex-start;
+    background:rgba(236,72,153,.12);color:#f0a; border:1px solid rgba(236,72,153,.3);
+  }
+
+  table.cost{
+    width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px;
+  }
+  table.cost th, table.cost td{
+    text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);
+  }
+  table.cost th{color:var(--muted);font-weight:600;font-family:'Space Grotesk',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+  table.cost td.num{font-family:'Space Grotesk',sans-serif;color:#ffcf6b;}
+  table.cost tr.total td{font-weight:700;color:var(--text);border-top:2px solid var(--line);border-bottom:none;}
+  table.cost tr.total td.num{color:#ffcf6b;font-size:15px;}
+
+  footer{
+    max-width:920px;margin:0 auto;padding:24px;color:var(--muted);font-size:12.5px;
+    border-top:1px solid var(--line);
+  }
+  @media (max-width:600px){
+    header{padding:32px 16px 24px;}
+    main{padding:0 16px 60px;}
+  }
+</style>
+</head>
+<body>
+
+<input type="radio" name="tab" id="t1" checked>
+<input type="radio" name="tab" id="t2">
+<input type="radio" name="tab" id="t3">
+<input type="radio" name="tab" id="t4">
+<input type="radio" name="tab" id="t5">
+<input type="radio" name="tab" id="t6">
+<input type="radio" name="tab" id="t7">
+<input type="radio" name="tab" id="t8">
+<input type="radio" name="tab" id="t9">
+<input type="radio" name="tab" id="t10">
+
+<header>
+  <div class="eyebrow">TOKYO ROUTE MAP — 남자 3인 (대학1 · 고2 · 고1)</div>
+  <h1>도쿄 여행 일정표</h1>
+  <p class="sub">2026.08.10(월) – 08.15(토) · 숙소: 다이토구 미스지(아키하바라 도보권)</p>
+  <div class="flightbar">
+    <div class="chip">🛬 입국 &nbsp;<b>8/10(월) 11:00</b>&nbsp; 나리타공항</div>
+    <div class="chip">🛫 출국 &nbsp;<b>8/15(토) 20:25</b>&nbsp; 진에어 · 나리타공항</div>
+    <div class="chip">☀️ 평년 낮 30~33℃ · 밤 24~25℃, 습하고 소나기 가능</div>
+  </div>
+</header>
+
+<div class="course-select">
+  <div class="cs-label">코스 선택</div>
+  <div class="cs-grid">
+    <label class="cs-card" id="cs-c1" style="--dot:#7b8cff">
+      <input type="radio" name="course" value="c1" checked>
+      <div class="cs-title">① 기본 코스</div>
+      <div class="cs-desc">시부야·하라주쿠·신주쿠 + 도쿄역·긴자·신바시, 도심 투어 위주</div>
+    </label>
+    <label class="cs-card" id="cs-c2" style="--dot:var(--d4)">
+      <input type="radio" name="course" value="c2">
+      <div class="cs-title">② 에노시마 (Day4 대신)</div>
+      <div class="cs-desc">8/13 시부야 자리를 슬램덩크 성지 에노시마·가마쿠라로 교체</div>
+    </label>
+    <label class="cs-card" id="cs-c3" style="--dot:var(--d5)">
+      <input type="radio" name="course" value="c3">
+      <div class="cs-title">③ 에노시마 (Day5 대신) · 추천</div>
+      <div class="cs-desc">8/14 도쿄역 자리를 에노시마로 교체, 출국일 오전에 도쿄역·긴자 살짝 보완</div>
+    </label>
+  </div>
+</div>
+
+<div class="daynav">
+  <label for="t1" style="--dot:var(--d1)">8/10 도착·아사쿠사</label>
+  <label for="t2" style="--dot:var(--d2)">8/11 아키하바라</label>
+  <label for="t3" style="--dot:var(--d3)">8/12 스카이트리</label>
+  <label for="t4" id="nav-t4" style="--dot:var(--d4)">8/13 시부야·신주쿠</label>
+  <label for="t5" id="nav-t5" style="--dot:var(--d5)">8/14 도쿄역·긴자</label>
+  <label for="t6" style="--dot:var(--d6)">8/15 출국일</label>
+  <label for="t7">비용</label>
+  <label for="t8">팁</label>
+  <label for="t9">준비물</label>
+  <label for="t10">주요 상점</label>
+</div>
+
+<main>
+
+<!-- DAY 1 -->
+<section class="panel" id="p1">
+  <div class="daytitle"><span class="badge" style="background:var(--d1)">DAY 1</span><h2>8/10(월) · 입국 & 아사쿠사</h2></div>
+  <p class="daydesc">비행 후 이동일. 컨디션 관리를 위해 무리하지 않고, 저녁엔 아키하바라 야경으로 가볍게 첫인상만 본다. 본격 쇼핑·관광은 다음 날부터.</p>
+  <div class="routebtns" style="--dot:var(--d1)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.698383,139.7730717&travelmode=walking" target="_blank">🗺️ 숙소→아키하바라 (도보, 약 20분)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d1)">
+
+    <div class="stop"><div class="time">11:00</div>
+      <div class="name">나리타공항 도착 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank">지도 ↗</a></div>
+      <div class="desc">입국 수속 및 짐 수령, 심카드/포켓와이파이 수령</div>
+    </div>
+
+    <div class="stop"><div class="time">12:00</div>
+      <div class="name">케이세이 스카이라이너 탑승 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Keisei+Narita+Airport+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">나리타공항역 → 게이세이우에노역, 약 41분</div>
+      <span class="cost">1인 2,570엔 (라이너권+승차권)</span>
+      <div class="transit"><b>교통</b> 3인 합계 약 7,710엔 · 좌석 지정이라 성수기엔 사전 예약 추천</div>
+    </div>
+
+    <div class="stop"><div class="time">13:00</div>
+      <div class="name">게이세이우에노역 → 숙소 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=2-chome-20-7+Misuji+Taito+City+Tokyo" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 20분 또는 지하철(긴자선 1정거장+도보) 이용</div>
+      <span class="cost">지하철 1인 180엔</span>
+    </div>
+
+    <div class="stop"><div class="time">14:00</div>
+      <div class="name">숙소 체크인 & 짐 정리</div>
+      <div class="desc">간단히 씻고 정비, 늦은 오후부터 휴식</div>
+    </div>
+
+    <div class="stop"><div class="time">19:00</div>
+      <div class="name">숙소 출발 → 아키하바라 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Akihabara+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 20분(1.4km). 첫 저녁이라 가볍게 주변만 살피기</div>
+    </div>
+
+    <div class="stop"><div class="time">20:00</div>
+      <div class="name">저녁: 아키하바라 요시노야 규동 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Yoshinoya+Akihabara" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 500~700엔</span>
+    </div>
+
+    <div class="stop"><div class="time">20:30</div>
+      <div class="name">아키하바라 전자상가 야경 산책</div>
+      <div class="desc">전광판·간판 불빛 구경. 본격 쇼핑은 화요일</div>
+    </div>
+
+    <div class="stop"><div class="time">21:00</div>
+      <div class="name">숙소 복귀</div>
+      <div class="desc">도보 약 20분(1.4km). 이동일이라 일찍 정리</div>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>나리타→시내 스카이라이너</td><td class="num">2,570엔</td></tr>
+      <tr><td>저녁: 요시노야 규동</td><td class="num">500~700엔</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 3,070~3,270엔</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- DAY 2 -->
+<section class="panel" id="p2">
+  <div class="daytitle"><span class="badge" style="background:var(--d2)">DAY 2</span><h2>8/11(화) · 진보초 & 아키하바라</h2></div>
+  <p class="daydesc">오타쿠 핵심 2일차. 오전 진보초에서 만화·레트로 감성 느끼고, 이후 하루 종일 아키하바라 전자상가·게임센터·메이드카페로 충전.</p>
+  <div class="routebtns" style="--dot:var(--d2)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.7065555,139.785168&waypoints=35.7090,139.7626|35.698917,139.774798|35.6992456,139.7709552|35.700373,139.770503|35.7004944,139.7717427|35.7020083,139.7712982&travelmode=walking" target="_blank">🗺️ 전체 경로 보기 (도보 루프, 숙소→진보초→아키하바라→숙소)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d2)">
+
+    <div class="stop"><div class="time">08:00</div>
+      <div class="name">숙소 출발 → 진보초 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Jimbocho+Manga+Street+Tokyo" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 20분(1.5km). 도쿄의 오래된 만화·헌책 성지</div>
+    </div>
+
+    <div class="stop"><div class="time">08:30</div>
+      <div class="name">진보초 헌책방·만화 굿즈 숍 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Maruzen+Jimbocho" target="_blank">지도 ↗</a></div>
+      <div class="desc">마루젠·산세이도 등 대형 헌책방, 레트로 만화 브라우징, 캐릭터 중고 굿즈</div>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">진보초 카레 골목 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Jimbocho+Curry+Alley" target="_blank">지도 ↗</a></div>
+      <div class="desc">50년 이상 역사의 카레 전문 골목, 아침 카레 한 그릇 (선택)</div>
+      <span class="cost">1인 800~1,200엔 (선택)</span>
+    </div>
+
+    <div class="stop"><div class="time">11:00</div>
+      <div class="name">아키하바라 이동 → 전자상가 & 애니메이트 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Animate+Akihabara" target="_blank">지도 ↗</a></div>
+      <div class="desc">진보초에서 도보 약 25분(1.8km). 요도바시 카메라, 애니메이트 본점 피규어·굿즈 투어</div>
+    </div>
+
+    <div class="stop"><div class="time">12:30</div>
+      <div class="name">점심: 아키하바라 라멘거리 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Akihabara+Ramen" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 900~1,200엔</span>
+    </div>
+
+    <div class="stop"><div class="time">14:00</div>
+      <div class="name">만다라케 & 슈퍼포테이토 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Mandarake+Akihabara" target="_blank">지도 ↗</a></div>
+      <div class="desc">중고 굿즈, 레트로 게임 매장 (슈퍼포테이토 3층)</div>
+    </div>
+
+    <div class="stop"><div class="time">16:00</div>
+      <div class="name">게임센터(GiGO) & 건프라 매장 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=GiGO+Akihabara" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 1,000~2,000엔</span>
+    </div>
+
+    <div class="stop"><div class="time">18:00</div>
+      <div class="name">메이드카페 체험 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Maidreamin+Akihabara" target="_blank">지도 ↗</a></div>
+      <div class="desc">입장료+음료 1잔 기준. 예약 없이도 입장 가능하나 대기 있을 수 있음</div>
+      <span class="cost">1인 1,500~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">19:30</div>
+      <div class="name">저녁: 아키하바라 야키니쿠 or 이자카야 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Akihabara+Yakiniku" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 1,800~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">21:00</div>
+      <div class="name">숙소 복귀</div>
+      <div class="desc">도보 약 20분(1.4km). 저녁 8시쯤 자리 정리하고 숙소까지 걸어서 돌아오면 밤 9시 전후 도착</div>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>진보초 카레 (선택)</td><td class="num">800~1,200엔</td></tr>
+      <tr><td>점심: 아키하바라 라멘</td><td class="num">900~1,200엔</td></tr>
+      <tr><td>게임센터</td><td class="num">1,000~2,000엔</td></tr>
+      <tr><td>메이드카페</td><td class="num">1,500~2,500엔</td></tr>
+      <tr><td>저녁: 야키니쿠</td><td class="num">1,800~2,500엔</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 6,000~9,400엔</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- DAY 3 -->
+<section class="panel" id="p3">
+  <div class="daytitle"><span class="badge" style="background:var(--d3)">DAY 3</span><h2>8/12(수) · 아사쿠사 & 스미다강 & 스카이트리</h2></div>
+  <p class="daydesc">아사쿠사에서 사진·간식 짧게 즐긴 후, 스미다강을 따라 북→남 일직선으로 도보. 스카이트리는 외관만, 수족관 추가로 실내 경험 확보. 저녁엔 스카이트리뷰 목욕탕.</p>
+  <div class="routebtns" style="--dot:var(--d3)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.701527,139.804531&waypoints=35.7147651,139.7966553|35.7100993,139.7989282|35.7137617,139.8014506|35.7100627,139.8107004|35.7110932,139.8036013&travelmode=walking" target="_blank">🗺️ 전체 경로 보기 (도보 북→남, 숙소→아사쿠사→아즈마바시→스카이트리→미즈마치→미코쿠유)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d3)">
+
+    <div class="stop"><div class="time">08:30</div>
+      <div class="name">숙소 출발 · 아사쿠사로 도보 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Senso-ji+Temple+Asakusa" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 20분(1.4km), 나카미세도리 산책·사진 + 간식(댕고·소프트아이스크림)</div>
+    </div>
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">아사쿠사에서 스미다강으로 이동 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sumida+River+Terrace" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 15분(1km). 아사쿠사바시 방향으로 강변길 진입</div>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">아즈마바시 다리 & 스미다공원 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Azumabashi+Bridge+Sumida+Park" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 15분(1.2km). 다리 위 포토스팟, 아사히 맥주홀 황금 오브제+스카이트리 한 프레임</div>
+    </div>
+
+    <div class="stop"><div class="time">10:30</div>
+      <div class="name">도쿄 스카이트리 외관 & 사진 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Skytree" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 10분(0.9km). 전망대 티켓 스킵, 외관만 사진 촬영 (5분)</div>
+    </div>
+
+    <div class="stop"><div class="time">12:30</div>
+      <div class="name">점심: 소라마치 푸드코트 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Solamachi+Food+Court" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 1,200~1,800엔</span>
+    </div>
+
+    <div class="stop"><div class="time">14:00</div>
+      <div class="name">스미다 수족관 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Sumida+Aquarium" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 바로 옆(스카이트리 내부). 실내, 한낮 더위 피하기 좋음</div>
+      <span class="cost">1인 약 2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">15:30</div>
+      <div class="name">도쿄 미즈마치 산책 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Mizumachi" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 10분(0.8km). 철도 고가 아래 카페거리</div>
+    </div>
+
+    <div class="stop"><div class="time">17:30</div>
+      <div class="name">御谷湯(미코쿠유) 목욕탕 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Mikokuyu+Sumida" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 13분(1.1km). 노천탕에서 스카이트리 뷰</div>
+      <span class="cost">입욕료 1인 약 500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">19:00</div>
+      <div class="name">저녁: 목욕탕 근처 이자카야 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Kinshicho+Izakaya" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 1,800~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">21:00</div>
+      <div class="name">전철로 숙소 복귀</div>
+      <div class="desc">혼조아즈마바시역에서 전철(긴자선), 약 15분</div>
+      <span class="cost">1인 약 200엔</span>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>아사쿠사 간식</td><td class="num">500~800엔</td></tr>
+      <tr><td>점심: 소라마치 푸드코트</td><td class="num">1,200~1,800엔</td></tr>
+      <tr><td>스미다 수족관</td><td class="num">약 2,500엔</td></tr>
+      <tr><td>미코쿠유 입욕료</td><td class="num">약 500엔</td></tr>
+      <tr><td>저녁: 이자카야</td><td class="num">1,800~2,500엔</td></tr>
+      <tr><td>전철 (복귀)</td><td class="num">약 200엔</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 6,700~8,300엔</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- DAY 4 (탭 표시 담당 래퍼) -->
+<div class="panel" id="p4-wrap">
+
+<!-- DAY 4 - 기존 일정 -->
+<section id="p4-original">
+  <div class="daytitle"><span class="badge" style="background:var(--d4)">DAY 4</span><h2>8/13(목) · 시부야 · 하라주쿠 · 신주쿠</h2></div>
+  <p class="daydesc">젊은 층 핫플레이스 라인. 야마노테선으로 이동하며 하루 종일 도심 투어.</p>
+  <div class="routebtns" style="--dot:var(--d4)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.659482,139.7005596&travelmode=transit" target="_blank">🗺️ ① 숙소→시부야 (전철)</a>
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.659482,139.7005596&destination=35.6950521,139.7019117&waypoints=35.6588667,139.6968457|35.6710335,139.7051821|35.6700649,139.6949656|35.6927011,139.6995778&travelmode=walking" target="_blank">🗺️ ② 시부야→...→가부키초 (도보)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d4)">
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">숙소 → 시부야 이동 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Shibuya+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">아사쿠사바시역에서 JR 또는 지하철 환승, 약 30~35분</div>
+      <span class="cost">1인 250엔대</span>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">시부야 스크램블 교차로 & 하치공 동상 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Shibuya+Scramble+Crossing" target="_blank">지도 ↗</a></div>
+      <div class="desc">시부야 스카이 전망대(선택, 유료)도 근처</div>
+    </div>
+
+    <div class="stop"><div class="time">12:00</div>
+      <div class="name">점심: 토리카츠 치킨 시부야 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Torikatsu+Chicken+Shibuya+Dogenzaka" target="_blank">지도 ↗</a></div>
+      <div class="desc">백종원이 소개한 750엔 치킨카츠 정식으로 유명 (도겐자카 2-16-1)</div>
+      <span class="cost">1인 750엔</span>
+    </div>
+
+    <div class="stop"><div class="time">14:00</div>
+      <div class="name">하라주쿠 다케시타도리 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Takeshita+Street+Harajuku" target="_blank">지도 ↗</a></div>
+      <div class="desc">크레페, 트렌디 소품샵. 시부야에서 도보 약 20분 또는 1정거장</div>
+      <span class="cost">간식 1인 500~800엔</span>
+    </div>
+
+    <div class="stop"><div class="time">16:00</div>
+      <div class="name">요요기공원 산책 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Yoyogi+Park" target="_blank">지도 ↗</a></div>
+      <div class="desc">나무 그늘이 많아 더위 식히기 좋음</div>
+    </div>
+
+    <div class="stop"><div class="time">18:30</div>
+      <div class="name">신주쿠 오모이데요코초 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Omoide+Yokocho+Shinjuku" target="_blank">지도 ↗</a></div>
+      <div class="desc">야키토리 골목. 하라주쿠에서 JR로 약 10분</div>
+      <span class="cost">1인 1,500~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">20:00</div>
+      <div class="name">가부키초 고질라 헤드 & 야경 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Godzilla+Head+Kabukicho" target="_blank">지도 ↗</a></div>
+      <div class="desc">전광판 야경 감상. 8시쯤 마무리하고 전철로 이동</div>
+    </div>
+
+    <div class="stop"><div class="time">21:00</div>
+      <div class="name">숙소 도착</div>
+      <div class="desc">신주쿠 → 아사쿠사바시 전철 약 30분, 도착 후 걸어서 숙소까지 5분</div>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>전철: 숙소→시부야</td><td class="num">250엔대</td></tr>
+      <tr><td>점심: 토리카츠 치킨</td><td class="num">750엔</td></tr>
+      <tr><td>간식: 다케시타도리</td><td class="num">500~800엔</td></tr>
+      <tr><td>저녁: 오모이데요코초</td><td class="num">1,500~2,500엔</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 3,000~4,350엔</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- DAY 4 - ENOSHIMA VERSION -->
+<section id="p4-enoshima">
+  <div class="daytitle"><span class="badge" style="background:var(--d4)">DAY 4</span><h2>8/13(목) · 에노시마 & 가마쿠라</h2></div>
+  <p class="daydesc">슬램덩크 성지 가마쿠라 일일치기. 가마쿠라코코마에 건널목(오프닝 장면)→에노시마 신사·전망대→석양·귀가. 애니 팬 필수 코스.</p>
+  <div class="routebtns" style="--dot:var(--d4)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.7065555,139.785168&waypoints=35.6820335,139.7686549|35.3116,139.4834|35.3110,139.4881&travelmode=transit" target="_blank">🗺️ 전체 경로 보기 (전철+에노덴, 숙소→신주쿠→후지사와→에노시마→가마쿠라→귀가)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d4)">
+
+    <div class="stop"><div class="time">07:30</div>
+      <div class="name">숙소 출발 → 신주쿠 이동</div>
+      <div class="desc">아사쿠사바시역에서 전철, 약 30분. 아침 일찍 출발 필수</div>
+      <span class="cost">1인 250엔대</span>
+    </div>
+
+    <div class="stop"><div class="time">08:20</div>
+      <div class="name">신주쿠 → 후지사와 (오다큐선) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Fujisawa+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">직행로맨스카 또는 일반 열차, 약 1시간 10분</div>
+      <span class="cost">1인 990엔</span>
+    </div>
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">후지사와 → 에노시마역 (에노덴 환승) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Station+Enoden" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노덴(노면전차) 탑승, 약 10분. 낭만적인 해안 노선</div>
+      <span class="cost">1인 220엔</span>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">에노시마 신사 & 섬 관광 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Shrine" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노시마 신사, 동굴, 전망대. 나미 노보루 동상도 있음</div>
+      <span class="cost">입장료 약 500~2,000엔 (선택)</span>
+    </div>
+
+    <div class="stop"><div class="time">12:00</div>
+      <div class="name">점심: 에노시마 해산물 레스토랑 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Seafood+Restaurant" target="_blank">지도 ↗</a></div>
+      <div class="desc">해변 카페에서 신선한 생선회·튀김 즐기기</div>
+      <span class="cost">1인 1,500~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">14:00</div>
+      <div class="name">에노덴 탑승 → 가마쿠라코코마에역 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Kamakura+Kokomae+Station+Slam+Dunk" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노덴으로 약 15분. 슬램덩크 오프닝 장면의 건널목 촬영 필수</div>
+      <span class="cost">에노덴 왕복 또는 1일권 (약 800엔/1일권)</span>
+    </div>
+
+    <div class="stop"><div class="time">14:30</div>
+      <div class="name">슬램덩크 건널목 (가마쿠라코코마에) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Slam+Dunk+Crossing+Kamakura" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노덴 기찻길 건너편 횡단보도. 오프닝 장면 재현 필수. 실제 기차 지나갈 때 촬영 권장</div>
+    </div>
+
+    <div class="stop"><div class="time">15:30</div>
+      <div class="name">에노덴 타고 돌아오기 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노시마역 복귀, 약 15분. 이번엔 왼쪽 창가석에서 바다 감상</div>
+    </div>
+
+    <div class="stop"><div class="time">16:30</div>
+      <div class="name">석양 카페 & 휴식 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Sunset+Cafe" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노시마 근처 카페에서 석양 감상</div>
+      <span class="cost">1인 1,000~1,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">18:00</div>
+      <div class="name">귀가: 후지사와 → 신주쿠 (오다큐선)</div>
+      <div class="desc">로맨스카 또는 일반 열차, 약 1시간 10분</div>
+      <span class="cost">1인 990엔</span>
+    </div>
+
+    <div class="stop"><div class="time">19:30</div>
+      <div class="name">신주쿠 → 숙소 전철</div>
+      <div class="desc">약 30분, 밤 10시쯤 도착</div>
+      <span class="cost">1인 250엔대</span>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>숙소→신주쿠 전철</td><td class="num">250엔대</td></tr>
+      <tr><td>신주쿠→후지사와 (오다큐선)</td><td class="num">990엔</td></tr>
+      <tr><td>에노덴 왕복/1일권</td><td class="num">약 800~1,000엔</td></tr>
+      <tr><td>점심: 해산물</td><td class="num">1,500~2,500엔</td></tr>
+      <tr><td>에노시마 입장료 (선택)</td><td class="num">약 500~2,000엔</td></tr>
+      <tr><td>석양 카페</td><td class="num">1,000~1,500엔</td></tr>
+      <tr><td>후지사와→신주쿠 (오다큐선)</td><td class="num">990엔</td></tr>
+      <tr><td>신주쿠→숙소 전철</td><td class="num">250엔대</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 6,300~10,000엔</td></tr>
+    </table>
+  </div>
+</section>
+
+</div>
+<!-- /Day4 래퍼 끝 -->
+
+<!-- DAY 5 (탭 표시 담당 래퍼) -->
+<div class="panel" id="p5-wrap">
+
+<!-- DAY 5 - 기존 일정 -->
+<section id="p5-original">
+  <div class="daytitle"><span class="badge" style="background:var(--d5)">DAY 5</span><h2>8/14(금) · 도쿄역 · 긴자 · 신바시</h2></div>
+  <p class="daydesc">도쿄역 캐릭터스트리트로 시작해 긴자 번화가를 거쳐 신바시 샐러리맨 골목에서 마무리하는, 오다이바 대신 도심 클래식 코스.</p>
+  <div class="routebtns" style="--dot:var(--d5)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.7065555,139.785168&waypoints=35.6820335,139.7686549|35.6697688,139.7641762|35.667067,139.7576338&travelmode=transit" target="_blank">🗺️ 전체 경로 보기 (전철+도보, 숙소→도쿄역→긴자→신바시→숙소)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d5)">
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">숙소 → 도쿄역 이동 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">아사쿠사바시역에서 전철, 간다역 환승 약 20분</div>
+      <span class="cost">1인 200엔대</span>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">도쿄 캐릭터스트리트 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Character+Street" target="_blank">지도 ↗</a></div>
+      <div class="desc">도쿄역 지하 1층. 포켓몬·드래곤볼·산리오·건담 등 캐릭터 공식샵이 모여 있어 오타쿠 취향에도 잘 맞음</div>
+    </div>
+
+    <div class="stop"><div class="time">11:30</div>
+      <div class="name">도쿄역 마루노우치 역사 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Station+Marunouchi" target="_blank">지도 ↗</a></div>
+      <div class="desc">붉은 벽돌의 옛 역사 건물, 사진 명소</div>
+    </div>
+
+    <div class="stop"><div class="time">12:00</div>
+      <div class="name">점심: 도쿄역 라멘스트리트 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Ramen+Street" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 1,000~1,300엔</span>
+    </div>
+
+    <div class="stop"><div class="time">13:30</div>
+      <div class="name">긴자 산책 · 긴자식스 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Ginza+Six" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 20분(1.3km). 츄오도리 명품가, 긴자식스 옥상정원, 소니파크 등 윈도우쇼핑 위주</div>
+    </div>
+
+    <div class="stop"><div class="time">15:30</div>
+      <div class="name">신바시 SL광장 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Shimbashi+SL+Square" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 10분(0.6km). 증기기관차와 고층빌딩이 함께 있는 '샐러리맨의 성지', 애니메이션에도 자주 나오는 배경</div>
+    </div>
+
+    <div class="stop"><div class="time">17:00</div>
+      <div class="name">저녁: 신바시 가드시타 이자카야 골목 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Shimbashi+Izakaya+Alley" target="_blank">지도 ↗</a></div>
+      <div class="desc">고가철도 아래 이자카야 골목, 퇴근길 샐러리맨 분위기를 제대로 느낄 수 있음. 밤 8시쯤까지 여유 있게 머물러도 좋음</div>
+      <span class="cost">1인 1,800~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">20:00</div>
+      <div class="name">숙소로 전철 복귀 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Asakusabashi+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">신바시 → 아사쿠사바시, 약 20~25분. 밤 9~10시쯤 숙소 도착</div>
+      <span class="cost">1인 200엔대</span>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>전철: 숙소→도쿄역</td><td class="num">200엔대</td></tr>
+      <tr><td>점심: 도쿄역 라멘스트리트</td><td class="num">1,000~1,300엔</td></tr>
+      <tr><td>저녁: 신바시 이자카야</td><td class="num">1,800~2,500엔</td></tr>
+      <tr><td>전철: 신바시→숙소</td><td class="num">200엔대</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 3,200~4,400엔</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- DAY 5 - ENOSHIMA VERSION -->
+<section id="p5-enoshima">
+  <div class="daytitle"><span class="badge" style="background:var(--d5)">DAY 5</span><h2>8/14(금) · 에노시마 & 가마쿠라</h2></div>
+  <p class="daydesc">슬램덩크 성지 가마쿠라 일일치기. 가마쿠라코코마에 건널목(오프닝 장면)→에노시마 신사·전망대→석양·귀가. 애니 팬 필수 코스.</p>
+  <div class="routebtns" style="--dot:var(--d5)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.7065555,139.785168&waypoints=35.6820335,139.7686549|35.3116,139.4834|35.3110,139.4881&travelmode=transit" target="_blank">🗺️ 전체 경로 보기 (전철+에노덴, 숙소→신주쿠→후지사와→에노시마→가마쿠라→귀가)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d5)">
+
+    <div class="stop"><div class="time">07:30</div>
+      <div class="name">숙소 출발 → 신주쿠 이동</div>
+      <div class="desc">아사쿠사바시역에서 전철, 약 30분. 아침 일찍 출발 필수</div>
+      <span class="cost">1인 250엔대</span>
+    </div>
+
+    <div class="stop"><div class="time">08:20</div>
+      <div class="name">신주쿠 → 후지사와 (오다큐선) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Fujisawa+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">직행로맨스카 또는 일반 열차, 약 1시간 10분</div>
+      <span class="cost">1인 990엔</span>
+    </div>
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">후지사와 → 에노시마역 (에노덴 환승) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Station+Enoden" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노덴(노면전차) 탑승, 약 10분. 낭만적인 해안 노선</div>
+      <span class="cost">1인 220엔</span>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">에노시마 신사 & 섬 관광 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Shrine" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노시마 신사, 동굴, 전망대. 나미 노보루 동상도 있음</div>
+      <span class="cost">입장료 약 500~2,000엔 (선택)</span>
+    </div>
+
+    <div class="stop"><div class="time">12:00</div>
+      <div class="name">점심: 에노시마 해산물 레스토랑 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Seafood+Restaurant" target="_blank">지도 ↗</a></div>
+      <div class="desc">해변 카페에서 신선한 생선회·튀김 즐기기</div>
+      <span class="cost">1인 1,500~2,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">14:00</div>
+      <div class="name">에노덴 탑승 → 가마쿠라코코마에역 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Kamakura+Kokomae+Station+Slam+Dunk" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노덴으로 약 15분. 슬램덩크 오프닝 장면의 건널목 촬영 필수</div>
+      <span class="cost">에노덴 왕복 또는 1일권 (약 800엔/1일권)</span>
+    </div>
+
+    <div class="stop"><div class="time">14:30</div>
+      <div class="name">슬램덩크 건널목 (가마쿠라코코마에) <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Slam+Dunk+Crossing+Kamakura" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노덴 기찻길 건너편 횡단보도. 오프닝 장면 재현 필수. 실제 기차 지나갈 때 촬영 권장</div>
+    </div>
+
+    <div class="stop"><div class="time">15:30</div>
+      <div class="name">에노덴 타고 돌아오기 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노시마역 복귀, 약 15분. 이번엔 왼쪽 창가석에서 바다 감상</div>
+    </div>
+
+    <div class="stop"><div class="time">16:30</div>
+      <div class="name">석양 카페 & 휴식 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Enoshima+Sunset+Cafe" target="_blank">지도 ↗</a></div>
+      <div class="desc">에노시마 근처 카페에서 석양 감상</div>
+      <span class="cost">1인 1,000~1,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">18:00</div>
+      <div class="name">귀가: 후지사와 → 신주쿠 (오다큐선)</div>
+      <div class="desc">로맨스카 또는 일반 열차, 약 1시간 10분</div>
+      <span class="cost">1인 990엔</span>
+    </div>
+
+    <div class="stop"><div class="time">19:30</div>
+      <div class="name">신주쿠 → 숙소 전철</div>
+      <div class="desc">약 30분, 밤 10시쯤 도착</div>
+      <span class="cost">1인 250엔대</span>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>숙소→신주쿠 전철</td><td class="num">250엔대</td></tr>
+      <tr><td>신주쿠→후지사와 (오다큐선)</td><td class="num">990엔</td></tr>
+      <tr><td>에노덴 왕복/1일권</td><td class="num">약 800~1,000엔</td></tr>
+      <tr><td>점심: 해산물</td><td class="num">1,500~2,500엔</td></tr>
+      <tr><td>에노시마 입장료 (선택)</td><td class="num">약 500~2,000엔</td></tr>
+      <tr><td>석양 카페</td><td class="num">1,000~1,500엔</td></tr>
+      <tr><td>후지사와→신주쿠 (오다큐선)</td><td class="num">990엔</td></tr>
+      <tr><td>신주쿠→숙소 전철</td><td class="num">250엔대</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 6,300~10,000엔</td></tr>
+    </table>
+  </div>
+</section>
+
+</div>
+<!-- /Day5 래퍼 끝 -->
+
+<!-- DAY 6 (탭 표시 담당 래퍼) -->
+<div class="panel" id="p6-wrap">
+
+<!-- DAY 6 - 기존 일정 -->
+<section id="p6-original">
+  <div class="daytitle"><span class="badge" style="background:var(--d6)">DAY 6</span><h2>8/15(토) · 출국일 (20:25 진에어)</h2></div>
+  <p class="daydesc">저녁 비행기라 오전~오후는 여유롭게 근처에서 마무리하고, 오후 늦게 나리타로 이동. 숙소에 짐을 맡길 수 있어 코인로커 없이도 홀가분하게 다닐 수 있음.</p>
+  <div class="routebtns" style="--dot:var(--d6)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.7110615,139.7736822&waypoints=35.7090028,139.7746259|35.698383,139.7730717|35.7065555,139.785168&travelmode=walking" target="_blank">🗺️ 전체 경로 보기 (도보, 숙소→아메요코→아키하바라→숙소→게이세이우에노)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d6)">
+
+    <div class="stop"><div class="time">09:00</div>
+      <div class="name">체크아웃 & 짐 보관 요청</div>
+      <div class="desc">숙소에 짐을 맡겨두고 몸만 가볍게 이동 (프론트에 미리 요청)</div>
+    </div>
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">우에노 아메요코 시장 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Ameyoko+Market+Ueno" target="_blank">지도 ↗</a></div>
+      <div class="desc">마지막 쇼핑, 기념품, 간식거리. 숙소에서 도보 약 20분</div>
+    </div>
+
+    <div class="stop"><div class="time">12:00</div>
+      <div class="name">점심: 요시노야 규동 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Yoshinoya+Ueno" target="_blank">지도 ↗</a></div>
+      <span class="cost">1인 500엔대</span>
+    </div>
+
+    <div class="stop"><div class="time">13:30</div>
+      <div class="name">아키하바라 마지막 산책 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Akihabara+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">안 가본 곳 짧게 둘러보기</div>
+    </div>
+
+    <div class="stop"><div class="time">16:00</div>
+      <div class="name">숙소서 짐 회수 → 게이세이우에노역 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Keisei+Ueno+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">숙소에서 짐 찾은 뒤 도보 약 13분(1.1km)으로 이동</div>
+    </div>
+
+    <div class="stop"><div class="time">16:20</div>
+      <div class="name">케이세이 스카이라이너 탑승</div>
+      <div class="desc">게이세이우에노 → 나리타공항, 약 41분</div>
+      <span class="cost">1인 2,570엔</span>
+      <div class="transit"><b>교통</b> 3인 합계 약 7,710엔</div>
+    </div>
+
+    <div class="stop"><div class="time">17:01</div>
+      <div class="name">나리타공항 도착 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank">지도 ↗</a></div>
+      <div class="desc">진에어 체크인 & 수탁 수하물, 출국 수속</div>
+    </div>
+
+    <div class="stop"><div class="time">18:30</div>
+      <div class="name">공항 내 저녁 & 면세점</div>
+      <div class="desc">마지막 남은 엔화 정리하기 좋은 타이밍</div>
+      <span class="cost">1인 1,000~1,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">20:25</div>
+      <div class="name">진에어 출국 (나리타 → 한국)</div>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>점심: 요시노야 규동</td><td class="num">500엔대</td></tr>
+      <tr><td>시내→나리타 스카이라이너</td><td class="num">2,570엔</td></tr>
+      <tr><td>공항 내 저녁 & 면세점</td><td class="num">1,000~1,500엔</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 4,100~4,700엔</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- DAY 6 - 보완형 (에노시마 Day5 선택 시: 아메요코 대신 도쿄역·긴자 미니코스) -->
+<section id="p6-compensate">
+  <div class="daytitle"><span class="badge" style="background:var(--d6)">DAY 6</span><h2>8/15(토) · 출국일 (20:25 진에어) · 도쿄역·긴자 보완</h2></div>
+  <p class="daydesc">에노시마를 Day5에 넣으면서 빠진 도쿄역·긴자를 출국일 오전에 짧게 채워 넣은 버전. 아메요코 대신 도쿄역 캐릭터스트리트와 긴자를 잠깐 들른다.</p>
+  <div class="routebtns" style="--dot:var(--d6)">
+    <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&origin=35.7065555,139.785168&destination=35.7110615,139.7736822&waypoints=35.6812362,139.767125|35.6717447,139.7639826|35.698383,139.7730717|35.7065555,139.785168&travelmode=transit" target="_blank">🗺️ 전체 경로 보기 (전철+도보, 숙소→도쿄역→긴자→아키하바라→숙소→게이세이우에노)</a>
+  </div>
+  <div class="timeline" style="--dot:var(--d6)">
+
+    <div class="stop"><div class="time">09:00</div>
+      <div class="name">체크아웃 & 짐 보관 요청</div>
+      <div class="desc">숙소에 짐을 맡겨두고 몸만 가볍게 이동 (프론트에 미리 요청)</div>
+    </div>
+
+    <div class="stop"><div class="time">09:30</div>
+      <div class="name">숙소 → 도쿄역 이동 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">아사쿠사바시역에서 전철, 간다역 환승 약 20분</div>
+      <span class="cost">1인 200엔대</span>
+    </div>
+
+    <div class="stop"><div class="time">10:00</div>
+      <div class="name">도쿄 캐릭터스트리트 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Character+Street" target="_blank">지도 ↗</a></div>
+      <div class="desc">도쿄역 지하 1층. 포켓몬·드래곤볼·산리오·건담 등 캐릭터샵, 짧게 30분 둘러보기</div>
+    </div>
+
+    <div class="stop"><div class="time">10:40</div>
+      <div class="name">긴자 산책 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Ginza+Six" target="_blank">지도 ↗</a></div>
+      <div class="desc">도보 약 20분. 긴자식스 주변 명품가 아이쇼핑, 40분 정도만 가볍게</div>
+    </div>
+
+    <div class="stop"><div class="time">11:40</div>
+      <div class="name">점심: 도쿄역 라멘스트리트로 복귀 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Tokyo+Ramen+Street" target="_blank">지도 ↗</a></div>
+      <div class="desc">긴자에서 도보+전철 약 15분</div>
+      <span class="cost">1인 1,000~1,300엔</span>
+    </div>
+
+    <div class="stop"><div class="time">13:00</div>
+      <div class="name">아키하바라 마지막 산책 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Akihabara+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">도쿄역에서 전철 약 20분. 안 가본 곳 짧게 둘러보기</div>
+    </div>
+
+    <div class="stop"><div class="time">15:30</div>
+      <div class="name">숙소서 짐 회수 → 게이세이우에노역 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Keisei+Ueno+Station" target="_blank">지도 ↗</a></div>
+      <div class="desc">숙소에서 짐 찾은 뒤 도보 약 13분(1.1km)으로 이동</div>
+    </div>
+
+    <div class="stop"><div class="time">16:20</div>
+      <div class="name">케이세이 스카이라이너 탑승</div>
+      <div class="desc">게이세이우에노 → 나리타공항, 약 41분</div>
+      <span class="cost">1인 2,570엔</span>
+      <div class="transit"><b>교통</b> 3인 합계 약 7,710엔</div>
+    </div>
+
+    <div class="stop"><div class="time">17:01</div>
+      <div class="name">나리타공항 도착 <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank">지도 ↗</a></div>
+      <div class="desc">진에어 체크인 & 수탁 수하물, 출국 수속</div>
+    </div>
+
+    <div class="stop"><div class="time">18:30</div>
+      <div class="name">공항 내 저녁 & 면세점</div>
+      <div class="desc">마지막 남은 엔화 정리하기 좋은 타이밍</div>
+      <span class="cost">1인 1,000~1,500엔</span>
+    </div>
+
+    <div class="stop"><div class="time">20:25</div>
+      <div class="name">진에어 출국 (나리타 → 한국)</div>
+    </div>
+
+  </div>
+
+  <div class="daycost">
+    <h3>이 날 경비 (1인)</h3>
+    <table>
+      <tr><td>전철: 숙소↔도쿄역·아키하바라</td><td class="num">400~500엔</td></tr>
+      <tr><td>점심: 도쿄역 라멘스트리트</td><td class="num">1,000~1,300엔</td></tr>
+      <tr><td>시내→나리타 스카이라이너</td><td class="num">2,570엔</td></tr>
+      <tr><td>공항 내 저녁 & 면세점</td><td class="num">1,000~1,500엔</td></tr>
+      <tr class="total"><td>합계</td><td class="num">약 5,000~5,900엔</td></tr>
+    </table>
+  </div>
+</section>
+
+</div>
+<!-- /Day6 래퍼 끝 -->
+
+<!-- COST -->
+<section class="panel" id="p7">
+  <div class="daytitle"><span class="badge" style="background:#7b8cff">COST</span><h2>예상 비용</h2></div>
+
+  <div class="info">
+    <h3>일별 경비 합계 (1인, 항공권·숙박 제외)</h3>
+    <table class="cost">
+      <tr><th>날짜</th><th>내용</th><th>금액</th></tr>
+      <tr><td>Day 1 · 8/10</td><td>입국, 스카이라이너, 아사쿠사·아키하바라 저녁</td><td class="num">3,100~3,300엔</td></tr>
+      <tr><td>Day 2 · 8/11</td><td>진보초 헌책방 & 아키하바라 종일</td><td class="num">6,000~9,400엔</td></tr>
+      <tr><td>Day 3 · 8/12</td><td>아사쿠사 · 스미다강 · 수족관 · 목욕탕</td><td class="num">6,700~8,300엔</td></tr>
+      <tr><td>Day 4 · 8/13</td><td>기본: 시부야·하라주쿠·신주쿠 / 코스② 선택 시: 에노시마·가마쿠라</td><td class="num">3,000~4,350 / 6,300~10,000엔</td></tr>
+      <tr><td>Day 5 · 8/14</td><td>기본: 도쿄역·긴자·신바시 / 코스③ 선택 시: 에노시마·가마쿠라</td><td class="num">3,200~4,400 / 6,300~10,000엔</td></tr>
+      <tr><td>Day 6 · 8/15</td><td>기본: 출국일(아메요코) / 코스③ 선택 시: 도쿄역·긴자 보완형</td><td class="num">4,100~4,700 / 5,000~5,900엔</td></tr>
+      <tr class="total"><td colspan="2">① 기본 코스 6일 합계 (1인)</td><td class="num">약 26,100~34,450엔</td></tr>
+      <tr class="total"><td colspan="2">② 에노시마(Day4) 코스 6일 합계 (1인)</td><td class="num">약 29,400~40,100엔</td></tr>
+      <tr class="total"><td colspan="2">③ 에노시마(Day5) 코스 6일 합계 (1인)</td><td class="num">약 30,100~41,250엔</td></tr>
+    </table>
+    <p style="margin-top:10px;">※ 식비·입장료·현지 교통비 기준, 항공권·숙박비 완전히 제외. 쇼핑·기념품 여유비(개인 편차 큼, +10,000엔~)는 별도. 환율은 변동되니 참고용으로 봐주세요 (100엔≈900원대).</p>
+  </div>
+
+  <div class="info">
+    <h3>코스별 요약</h3>
+    <p><b>① 기본 코스</b> — 도쿄역·긴자·시부야·하라주쿠·신주쿠까지 도심 핫플레이스를 골고루. 가장 무난하고 저렴함.<br>
+    <b>② 에노시마 코스 (Day4 대신)</b> — 8/13을 통째로 에노시마·가마쿠라 일일치기로 교체. 시부야 토리카츠 치킨·하라주쿠는 이번엔 포기.<br>
+    <b>③ 에노시마 코스 (Day5 대신, 추천)</b> — 8/14를 에노시마·가마쿠라로 교체하고, 시부야 토리카츠 치킨은 그대로 유지. 도쿄역은 이전에 다녀온 적이 있어 손실이 적고, 대신 8/15 출국일 오전에 도쿄역 캐릭터스트리트·긴자를 짧게 넣어 아쉬움을 보완했음.</p>
+  </div>
+
+  <div class="info">
+    <h3>💰 1인당 예산 한도 대비 (항공권·숙박 제외, 50만원 ≈ 55,000엔 기준)</h3>
+    <table class="cost">
+      <tr><th>구분</th><th>①기본</th><th>②에노시마-Day4</th><th>③에노시마-Day5</th></tr>
+      <tr><td>예상 총지출</td><td class="num">26,100~34,450엔</td><td class="num">29,400~40,100엔</td><td class="num">30,100~41,250엔</td></tr>
+      <tr><td>예산 대비 여유분</td><td class="num">약 21,100~29,450엔</td><td class="num">약 15,450~26,150엔</td><td class="num">약 14,300~25,450엔</td></tr>
+    </table>
+    <p style="margin-top:10px;">어느 코스를 골라도 1인당 예산(약 55,000엔) 안에 여유 있게 들어와요. 남는 돈은 전부 쓰기보다 아래 예비비 항목처럼 일부는 비상금으로 남겨두는 걸 추천합니다.</p>
+  </div>
+
+  <div class="info">
+    <h3>💳 공동경비 운영 가이드 (파스모 + 현금 분리)</h3>
+    <p>
+    <b>① 현금 몫부터 따로 떼어두기</b> — 스카이라이너처럼 좌석 지정이 필요해 파스모 태그만으로 안 되는 예약 교통권은 현금으로 구매. 1인 기준 스카이라이너 왕복 약 5,140엔, 에노시마 코스(②·③) 선택 시 오다큐 로맨스카·에노덴까지 포함해 1인 +약 3,000엔 추가. 이 금액은 미리 계산해서 봉투나 지갑에 따로 빼두면 헷갈리지 않음.<br><br>
+    <b>② 나머지는 파스모 공동경비 카드 한 장에</b> — 식사·간식·입장료·평소 대중교통 태그는 파스모 한 장으로 충분. 개찰구에서 세 명이 순서대로 같은 카드를 태그해도 문제없이 통과됨. 총 예산을 한 번에 충전하기보다, 초반 2~3일치만 넣고 잔액이 줄면 편의점 등에서 소액씩 추가 충전하는 게 분실 위험도 줄고 남은 예산 파악도 쉬움.<br><br>
+    <b>③ 총무 1명 지정 + 매일 밤 잔액 확인</b> — 카드를 들고 다니며 결제할 총무를 한 명 정하고, 하루 마무리할 때 파스모 잔액을 확인해서 그날 쓴 돈을 셋이 같이 체크. 특히 '선택' 항목이 많은 Day2(진보초 카레·메이드카페)는 그날 잔액 보고 즉석에서 넣을지 뺄지 결정하면 편함.<br><br>
+    <b>④ 예비비 10~15%는 항상 남겨두기</b> — 위 표처럼 이미 1인당 최소 14,000엔 이상의 여유가 있음. 이 중 일부(1인 5,000엔 정도)는 우천 시 대체 일정이나 물가 변동 대비용 비상금으로 남겨두는 걸 추천.
+    </p>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="panel" id="p8">
+  <div class="daytitle"><span class="badge" style="background:#2dd4bf">TIPS</span><h2>여행 팁</h2></div>
+
+  <!-- ===== 교통 ===== -->
+  <div class="tipcat">🚉 교통</div>
+
+  <div class="info">
+    <h3>파스모(PASMO) / 스이카 IC카드 실전 가이드</h3>
+    <p>공동경비 카드로 쓸 IC카드는 전철·버스·편의점·자판기까지 태그 한 번으로 결제돼요. 도쿄에서 산 파스모/스이카는 전국 상호이용이라 어디서든 쓸 수 있어요.<br><br>
+    <b>⚠️ 실물 카드 발급 주의 (2026년 현재):</b> 전 세계 IC칩 부족으로 무기명 실물 파스모·스이카 발급이 제한적일 수 있어요. 아이폰 유저는 <b>애플 지갑에 모바일 스이카/파스모를 등록</b>하는 게 제일 확실하고 편해요(품절 걱정 없음). 안드로이드 유저는 일본 내수용 단말이 아니면 모바일이 안 되니, 공항 입국장에서 관광객용 <b>웰컴 스이카(Welcome Suica)</b>를 먼저 확보하세요. 참고로 여행자용 '투어리스트 파스모'는 2026년 5월 발매 예정이라 이번 여행 때 나리타에서 구매 가능한지 현장 확인해보면 좋아요.<br><br>
+    <b>충전:</b> 역 발매기, 편의점, 세븐일레븐 ATM에서 현금 충전 가능. 편의점에서는 직원에게 "스이카(파스모) 챠지 시테 쿠다사이"라고 말하면 돼요. 1회 최대 2만 엔까지, 총 잔액 2만 엔 한도.<br>
+    <b>잔액 소진 꿀팁:</b> 귀국 전 편의점에서 "남은 잔액만큼 쓰고 나머지는 현금으로 낼게요"라고 하면 분할 결제가 돼서 잔돈을 깔끔하게 털 수 있어요. 모바일 카드는 잔액을 남겨두면 다음 일본 여행 때 그대로 재사용 가능(10년 유효).</p>
+  </div>
+
+  <div class="info">
+    <h3>신용카드 터치결제(Tap & Go) 대안</h3>
+    <p>2026년 3월부터 도쿄메트로·오다큐·게이오 등 주요 비(非)JR 철도 11개사에서 <b>비자·마스터카드 컨택리스 카드를 개찰구에 바로 터치</b>해서 탈 수 있게 됐어요. IC카드 없이도 이동은 가능하지만, 아직 JR 노선(야마노테선 등)은 통합되지 않았고 이번 여행은 파스모 공동경비 관리가 목적이니, 터치결제는 개인 지출용 보조 수단 정도로 참고하세요.</p>
+  </div>
+
+  <div class="info">
+    <h3>전철 이용 실전 팁</h3>
+    <p>· <b>철도 회사가 제각각</b>이라 환승 시 다른 회사 노선으로 넘어가면 정산이 필요할 수 있어요. IC카드를 쓰면 자동 정산되니 편해요.<br>
+    · <b>에스컬레이터</b>는 도쿄에서 <b>왼쪽에 서고 오른쪽을 비워둡니다</b> (급한 사람이 오른쪽으로 걸어 올라감). 오사카는 반대예요.<br>
+    · <b>러시아워</b>(오전 7:30~9:00, 오후 5:30~7:00) 전철은 극도로 혼잡해요. 일정상 이 시간대 장거리 이동은 피하도록 짜뒀어요. 혼잡 시 백팩은 앞으로 메거나 선반에 올리는 게 매너.<br>
+    · <b>열차 지연 증명서</b>가 있을 만큼 정시성이 철저해요. 스카이라이너·로맨스카 같은 지정석은 표에 적힌 시간에 늦지 않게 여유 있게 도착하세요.</p>
+  </div>
+
+  <div class="info">
+    <h3>교통 패스 비교</h3>
+    <p>하루 이동이 많은 날(스카이트리, 시부야)은 도쿄메트로 24시간권(성인 600엔) 또는 도쿄메트로+도영 공통권(900엔)이 개별 태그보다 저렴할 수 있어요. 다만 이번 일정은 도보 동선 위주라 대부분 파스모 태그가 더 이득이에요. 그날 동선 확정되면 비교해드릴게요.</p>
+  </div>
+
+  <!-- ===== 식사 ===== -->
+  <div class="tipcat">🍜 식사</div>
+
+  <div class="info">
+    <h3>식권 자판기(食券機) 주문 4단계</h3>
+    <p>규동·라멘·우동·카레·텐동 대부분의 1인 식당은 입구의 식권 자판기로 주문해요. 순서만 알면 5초면 끝나요.<br><br>
+    <b>① 돈 먼저 넣기</b> — 지폐/동전 투입구가 따로예요. 1,000엔 지폐만 받는 기계도 있으니 천 엔짜리를 준비해두면 안전.<br>
+    <b>② 메뉴 버튼 누르기</b> — 요즘 규동 체인·주요 역 근처는 터치스크린이라 한국어/영어 버튼이 있는 경우가 많아요. 사진 보고 고르면 됩니다.<br>
+    <b>③ 식권(표) 받아서 직원에게 건네기</b> — 자리에 앉아 직원이 오면 건네거나, 카운터에 올려두면 돼요.<br>
+    <b>④ 거스름돈 챙기기</b> — 거스름돈 반환 버튼(おつり)이 따로 있는 기계도 있으니 확인.<br><br>
+    💡 주요 역 체인점 자판기는 IC카드(파스모) 결제를 지원하는 곳이 많아요 — 공동경비 관리에 딱 좋아요. 단, 오래된 노포는 현금만 받으니 약간의 현금은 항상 챙기세요.</p>
+  </div>
+
+  <div class="info">
+    <h3>규동 체인 3사 차이 (요시노야 · 마츠야 · 스키야)</h3>
+    <p><b>마츠야</b> — 식권 자판기 주문. <b>된장국(미소시루)이 무료 포함</b>되는 메뉴가 많은 게 시그니처.<br>
+    <b>요시노야</b> — 매장에 따라 식권기/카운터 주문 혼재. 미소시루는 별도 결제.<br>
+    <b>스키야</b> — 식권기 거의 없고 <b>테이블에서 직접 주문</b>(점원 호출 버튼), 식사 후 카운터 결제. 미소시루 무료 포함.<br><br>
+    주문 시 양은 "나미(並, 보통)" / "오모리(大盛, 곱빼기)"로 말하거나 손가락으로 가리키면 돼요. 아침 정식(아사고항) 세트가 특히 가성비 좋아요.</p>
+  </div>
+
+  <div class="info">
+    <h3>라멘집 이용 팁</h3>
+    <p>· <b>돈코츠·쇼유·시오·미소</b> 등 국물 종류가 다양해요. 아키하바라·신주쿠 인기 라멘집은 대부분 식권제.<br>
+    · <b>카에다마(替え玉)</b>: 면만 추가하는 옵션(돈코츠 라멘집). 면을 다 먹기 전에 "카에다마 쿠다사이"라고 외치면 국물에 면을 더 넣어줘요.<br>
+    · <b>면 양 조절</b>: 양이 많기로 유명한 집(라멘지로 계열)은 "멘 한분(麺半分)"이라고 하면 면 절반으로 줄여줘요. 고등학생 입맛엔 표준 라멘집이 무난해요.<br>
+    · <b>후루룩 소리</b>는 매너 위반이 아니에요. 오히려 맛있게 먹는 표현으로 받아들여져요.<br>
+    · <b>1인 칸막이석(이치란 스타일)</b>이 많아 혼밥·짐 많은 날에도 편하게 먹을 수 있어요.</p>
+  </div>
+
+  <div class="info">
+    <h3>편의점 활용 가이드 (숙소에 간이 냉장고 있음)</h3>
+    <p><b>오니기리 (주먹밥)</b> | 130~200엔 | 명란·연어·참치마요 등. 아침·간식용<br>
+    <b>계란 샌드위치</b> | 270~320엔 | 세븐일레븐 '후와리 타마고산도', 로손 '타마고산도' 인기<br>
+    <b>도시락·파스타</b> | 500~700엔 | 명란 크림파스타(패밀리마트) 등 저렴하고 맛있음<br>
+    <b>컵라면·우동</b> | 400~600엔 | 숙소에서 데워 먹기 가능<br>
+    <b>치킨·튀김</b> | 200~500엔 | 편의점 프라이드 치킨도 의외로 맛있음<br>
+    <b>디저트</b> | 150~350엔 | 로손 프리미엄 롤케이크, 모찌빵 등<br>
+    <br>
+    💡 <b>활용팁:</b> 아키하바라 근처 편의점에서 아침·야식을 미리 사서 숙소 냉장고에 보관하면 시간 절약. 점심 한두 끼를 편의점으로 절약해 "자유시간"을 확보하는 것도 방법. 편의점 계산도 파스모로 하면 공동경비 정산이 깔끔해요.</p>
+  </div>
+
+  <!-- ===== 문화·매너 ===== -->
+  <div class="tipcat">🎌 일본 문화·매너</div>
+
+  <div class="info">
+    <h3>팁 문화가 없어요</h3>
+    <p>일본은 <b>팁을 주지 않는 게 기본</b>이에요. 오히려 팁을 건네면 상대가 당황하거나 거절해요. 식당·택시·호텔 어디서도 팁은 불필요합니다. 공동경비 계산할 때 팁을 따로 챙길 필요가 없으니 예산 관리가 그만큼 단순해져요.</p>
+  </div>
+
+  <div class="info">
+    <h3>대중교통·공공장소는 '조용히' (메이와쿠 문화)</h3>
+    <p>일본은 남에게 폐 끼치는 걸 극도로 피하는 '메이와쿠(민폐)' 문화가 있어요. 특히 전철 안이 한국보다 훨씬 조용해요.<br>
+    · <b>전철 내 통화 금지</b> — 심각한 민폐로 여겨져요. 급하면 짧게 끊고 내려서 통화.<br>
+    · <b>진동 모드 필수</b>, 이어폰 소리도 새어나가지 않게 볼륨 조절.<br>
+    · 남학생들끼리 신나서 <b>큰 소리로 떠들지 않도록</b> 미리 얘기해두면 좋아요.</p>
+  </div>
+
+  <div class="info">
+    <h3>쓰레기통이 거의 없어요</h3>
+    <p>거리에 공용 쓰레기통이 거의 없어요(보안·문화적 이유). <b>편의점·역 안</b>이 가장 확실한 쓰레기 배출처예요. 밖에서 생긴 쓰레기는 <b>비닐봉지에 담아 가방에 넣고 숙소까지 가져오는 게 기본</b>이에요. 작은 지퍼백을 챙기면 유용해요. 편의점 앞 쓰레기통은 원칙적으로 그 가게에서 산 물건 전용이에요.</p>
+  </div>
+
+  <div class="info">
+    <h3>식사·젓가락 매너</h3>
+    <p>· <b>밥에 젓가락 수직으로 꽂기(다테바시) 금지</b> — 제사를 연상시켜 큰 실례예요.<br>
+    · 젓가락에서 젓가락으로 음식을 건네주는 것도 피하세요(장례 풍습 연상).<br>
+    · 걸어 다니며 먹는 것(다베아루키)은 지역에 따라 눈치 보여요. 노점 근처나 지정된 자리에서 먹는 게 무난해요.</p>
+  </div>
+
+  <div class="info">
+    <h3>목욕탕(미코쿠유) 이용 매너</h3>
+    <p>· <b>탕에 들어가기 전 몸을 깨끗이 씻기</b>는 필수. 샤워 후 입욕.<br>
+    · <b>수건을 탕 안에 담그지 않기</b> — 머리에 올리거나 탕 밖에 둬요.<br>
+    · <b>문신(타투)이 있으면 입장 제한</b>되는 곳이 많으니 사전 확인 권장.<br>
+    · 사진 촬영은 대부분 금지예요.</p>
+  </div>
+
+  <div class="info">
+    <h3>현금 & 결제</h3>
+    <p>카드·IC 결제가 늘었지만 <b>노포·소규모 식당은 여전히 현금만</b> 받는 곳이 많아요. 공동경비 파스모와 별개로 <b>1인당 여유 현금 5,000~10,000엔</b>과 동전 지갑을 챙기세요. 스카이라이너 등 예약 교통권도 현금 구매 예정이니 첫날 공항에서 넉넉히 환전하거나 현금을 준비해두면 편해요.</p>
+  </div>
+
+  <!-- ===== 기타 ===== -->
+  <div class="tipcat">📌 기타 참고</div>
+
+  <div class="info">
+    <h3>숙소 체크인·체크아웃</h3>
+    <p><b>체크인:</b> 오후 3:00~8:00 / <b>체크아웃:</b> 오전 11:00 전<br>
+    · Day 1(월): 11:00 나리타 도착 → 15:00 체크인까지 공백. 짐을 숙소에 맡기고 가볍게 이동 추천.<br>
+    · Day 6(토): 체크아웃 후 짐을 프론트에 맡기면 저녁 출국 전까지 홀가분하게 다닐 수 있어요.</p>
+  </div>
+
+  <div class="info">
+    <h3>날씨 & 컨디션 관리</h3>
+    <p>8월 평년 기준 낮 최고 30~33℃, 밤에도 24~25℃ 안팎으로 매우 무덥고 습해요. 저녁에 짧고 강한 소나기가 올 수 있어 접이식 우산은 필수. 낮 12~15시는 실내(쇼핑몰·수족관·목욕탕·오락실) 위주로 배치했으니 이 틀은 유지하는 걸 추천해요. 물·이온음료 자주 챙겨 온열질환 조심하세요.</p>
+  </div>
+
+  <div class="info">
+    <h3>확인이 필요한 것들</h3>
+    <p>· 토리카츠 치킨은 명칭과 달리 돈까스(돼지고기)가 아니라 치킨카츠 전문점이에요 — 백종원이 소개한 곳이 이 집이 맞는지 한 번 더 확인해주세요.<br>
+    · 스카이트리·teamLab 등 인기 시설은 사전 온라인 예약 시 더 저렴하고 대기도 줄어요.<br>
+    · 구글맵 링크는 검색 결과 기준이라, 클릭 후 정확한 지점인지 한 번 더 확인하세요.<br>
+    · 에노시마 코스 선택 시 아침 일찍(7:30~8:00) 출발하고 밤 10시쯤 도착하니 컨디션 관리 필수예요.</p>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="panel" id="p9">
+  <div class="daytitle"><span class="badge" style="background:#f59e0b">PACKING</span><h2>준비물 체크리스트</h2></div>
+  <p class="daydesc">8월 도쿄(무더위·습함), 남자 3인, 파스모+현금 여행 기준으로 정리했어요. 체크박스를 눌러 확인용으로 쓰세요. <span style="color:#f87171;">필수</span>는 없으면 곤란한 것, <span style="color:#f59e0b;">공동</span>은 3인이 함께 챙기면 되는 것.</p>
+
+  <div class="info">
+    <h3>📄 서류·필수 (없으면 입국/이동 불가)</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>여권 <span class="note">(유효기간 6개월 이상 확인)</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>여권 사본 / 사진 촬영본 <span class="note">(분실 대비, 휴대폰에도 저장)</span></span></label></li>
+      <li><label><input type="checkbox"><span>왕복 항공권 (E-티켓) <span class="note">진에어 8/10 도착 · 8/15 20:25 출국</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>Visit Japan Web 등록 (입국·세관 QR) <span class="note">미리 등록하면 입국 빠름</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>숙소 예약 확인서 (주소·바우처) <span class="note">다이토구 미스지</span></span></label></li>
+      <li><label><input type="checkbox"><span>해외여행자 보험 가입 <span class="note">미성년 동행이라 특히 권장</span></span></label></li>
+      <li><label><input type="checkbox"><span>고등학생 2명 여권·보호자 동의 관련 서류 확인 <span class="note">(미성년 단독/보호자 동반 여부 규정 체크)</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h3>💳 돈·결제</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>현금 엔화 — 공동경비 파스모 충전용 + 예약 교통권용 <span class="note">스카이라이너 등은 현금 구매 예정</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>개인 여유 현금 1인 5,000~10,000엔 <span class="note">노포·소규모 식당은 현금만 받는 곳 많음</span></span></label></li>
+      <li><label><input type="checkbox"><span>동전 지갑 <span class="note">잔돈 많이 생김</span></span></label></li>
+      <li><label><input type="checkbox"><span>파스모/스이카 — 모바일(아이폰 애플지갑) 또는 실물 <span class="note">공동경비 카드 1장</span> <span class="tag">공동</span></span></label></li>
+      <li><label><input type="checkbox"><span>해외결제 가능 신용/체크카드 <span class="note">터치결제 대안 + 큰 지출용</span></span></label></li>
+      <li><label><input type="checkbox"><span>트래블카드(트래블월렛/트래블로그 등) <span class="note">환율 유리할 때 충전</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h3>📱 전자기기</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>휴대폰 + 충전기 <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>유심(USIM) / eSIM 또는 포켓와이파이 <span class="note">3인이면 무제한 유심 각자 or 포켓와이파이 1대 공유</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>보조배터리 <span class="note">기내 반입만 가능(위탁수하물 불가), 하루 종일 도보라 필수급</span></span></label></li>
+      <li><label><input type="checkbox"><span>멀티탭 / 3구 충전기 <span class="note">숙소 콘센트 부족 대비, 3인 동시 충전</span></span></label></li>
+      <li><label><input type="checkbox"><span>돼지코(110V 어댑터) <span class="note">일본은 110V·납작한 A타입, 한국 기기 그대로면 어댑터 필요</span></span></label></li>
+      <li><label><input type="checkbox"><span>이어폰 <span class="note">전철에서 영상·음악은 이어폰 필수 매너</span></span></label></li>
+      <li><label><input type="checkbox"><span>카메라 / 액션캠 <span class="note">에노시마 슬램덩크 건널목 촬영용(코스②·③)</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h3>👕 의류 (8월 무더위·습함, 5박6일)</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>반팔 티셔츠 넉넉히 <span class="note">땀 많이 나서 하루 1~2벌, 빨래 계획 없으면 넉넉히</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>반바지 / 얇은 바지</span></label></li>
+      <li><label><input type="checkbox"><span>속옷·양말 (일수+여유분)</span></label></li>
+      <li><label><input type="checkbox"><span>얇은 긴팔 / 가디건 <span class="note">냉방 강한 실내·전철 대비</span></span></label></li>
+      <li><label><input type="checkbox"><span>편한 운동화 <span class="note">하루 1만보 이상 걸음, 새 신발보다 길든 신발</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>샌들 / 슬리퍼 <span class="note">숙소·목욕탕용</span></span></label></li>
+      <li><label><input type="checkbox"><span>모자 / 선글라스 <span class="note">한낮 뙤약볕 대비</span></span></label></li>
+      <li><label><input type="checkbox"><span>목욕탕용 개인 수건 <span class="note">미코쿠유(Day3) — 수건 대여 유료일 수 있음</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h3>🧴 세면·위생·의약품</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>기본 세면도구 <span class="note">숙소 어메니티 확인 후 부족분만</span></span></label></li>
+      <li><label><input type="checkbox"><span>선크림 <span class="note">8월 햇볕 강함</span></span></label></li>
+      <li><label><input type="checkbox"><span>상비약 — 소화제·지사제·두통약·감기약 <span class="note">개인 복용약은 넉넉히</span></span></label></li>
+      <li><label><input type="checkbox"><span>밴드·연고 <span class="note">많이 걸어서 물집 대비</span></span></label></li>
+      <li><label><input type="checkbox"><span>땀 억제제 / 물티슈 / 손수건 <span class="note">습한 날씨 필수템</span></span></label></li>
+      <li><label><input type="checkbox"><span>휴대용 부채 / 미니 선풍기 <span class="note">현지 돈키호테서 구매도 가능</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h3>🎒 가방·기타</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>접이식 우산 <span class="note">저녁 소나기 잦음</span> <span class="tag essential">필수</span></span></label></li>
+      <li><label><input type="checkbox"><span>데일리 백팩 <span class="note">가볍고 물통 들어가는 것</span></span></label></li>
+      <li><label><input type="checkbox"><span>지퍼백·비닐봉지 여러 장 <span class="note">쓰레기통 없어서 쓰레기 담아 다니기 + 젖은 옷 분리</span></span></label></li>
+      <li><label><input type="checkbox"><span>에코백 / 여분 가방 <span class="note">아키하바라 쇼핑 전리품용, 일본은 봉투 유료</span></span></label></li>
+      <li><label><input type="checkbox"><span>텀블러 / 물통 <span class="note">더위에 수분 보충, 편의점 음료비 절약</span></span></label></li>
+      <li><label><input type="checkbox"><span>여분 캐리어 공간 or 접이식 보조가방 <span class="note">굿즈·기념품 귀국 짐 대비</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="info">
+    <h3>🛫 기내·수하물 주의</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>보조배터리·전자담배는 <b>기내 반입만</b> (위탁수하물 금지)</span></label></li>
+      <li><label><input type="checkbox"><span>액체류 100ml 이하 → 기내 / 큰 용량은 위탁수하물</span></label></li>
+      <li><label><input type="checkbox"><span>진에어 수하물 규정(무게·개수) 미리 확인 <span class="note">초과 시 현장 추가요금</span></span></label></li>
+      <li><label><input type="checkbox"><span>귀국편(8/15 20:25) 체크인 마감 시간 역산 <span class="note">16:20 스카이라이너 기준 여유 있음</span></span></label></li>
+    </ul>
+  </div>
+</section>
+
+<!-- BRANDS / SHOPS -->
+<section class="panel" id="p10">
+  <div class="daytitle"><span class="badge" style="background:#ec4899;color:#fff">SHOPS</span><h2>주요 상점 · 브랜드 가이드</h2></div>
+  <p class="daydesc">일본 여행에서 자주 마주치는 대표 체인점·상점을 카테고리별로 정리했어요. 규동 체인은 간판(로고) 느낌도 함께 넣었으니, 거리에서 보면 바로 알아볼 수 있을 거예요.</p>
+
+  <!-- 규동 체인 (로고 포함) -->
+  <div class="tipcat">🐮 규동(소고기덮밥) 3대 체인</div>
+  <div class="info">
+    <p style="margin-bottom:14px;">저렴하고 빠른 한 끼. 세 곳 모두 500~700엔대이고 24시간 매장이 많아요. 간판 색으로 구분하면 쉬워요 — <b style="color:#ff7a00;">주황=요시노야</b>, <b style="color:#d10f26;">빨강=마츠야</b>, <b style="color:#e60012;">빨강 소=스키야</b>.</p>
+    <div class="brandgrid">
+
+      <div class="brandcard">
+        <div class="logo">
+          <svg viewBox="0 0 130 44" xmlns="http://www.w3.org/2000/svg" height="44">
+            <rect x="0" y="6" width="130" height="32" rx="4" fill="#ff7a00"/>
+            <text x="10" y="29" font-family="'Noto Sans KR',sans-serif" font-size="19" font-weight="900" fill="#fff">吉野家</text>
+            <text x="74" y="21" font-family="'Space Grotesk',sans-serif" font-size="8" font-weight="700" fill="#fff">YOSHINOYA</text>
+            <text x="74" y="32" font-family="'Space Grotesk',sans-serif" font-size="7" fill="#ffe0b8">SINCE 1899</text>
+          </svg>
+        </div>
+        <div class="bname">요시노야 <span class="jp">吉野家</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E5%90%89%E9%87%8E%E5%AE%B6%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본 3대 규동의 원조격(1899년 창업). 진한 양념의 정통 규동 맛. 매장에 따라 식권기/카운터 주문 혼재, 미소시루(된장국)는 별도 결제.</p>
+      </div>
+
+      <div class="brandcard">
+        <div class="logo">
+          <svg viewBox="0 0 130 44" xmlns="http://www.w3.org/2000/svg" height="44">
+            <rect x="0" y="6" width="130" height="32" rx="4" fill="#d10f26"/>
+            <text x="10" y="29" font-family="'Noto Sans KR',sans-serif" font-size="19" font-weight="900" fill="#fff">松屋</text>
+            <text x="52" y="21" font-family="'Space Grotesk',sans-serif" font-size="8" font-weight="700" fill="#fff">MATSUYA</text>
+            <text x="52" y="32" font-family="'Space Grotesk',sans-serif" font-size="7" fill="#ffd0d0">牛めし</text>
+          </svg>
+        </div>
+        <div class="bname">마츠야 <span class="jp">松屋</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E6%9D%BE%E5%B1%8B%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">거의 모든 매장 식권 자판기(한국어 지원). <b>모든 밥 메뉴에 미소시루 무료 포함</b>이 최대 강점. 한국인 인기 메뉴는 '김치규동'. 학생·직장인 단골이 많아요.</p>
+      </div>
+
+      <div class="brandcard">
+        <div class="logo">
+          <svg viewBox="0 0 130 44" xmlns="http://www.w3.org/2000/svg" height="44">
+            <rect x="0" y="6" width="130" height="32" rx="4" fill="#e60012"/>
+            <circle cx="20" cy="22" r="11" fill="#fff"/>
+            <text x="14" y="27" font-family="'Noto Sans KR',sans-serif" font-size="13" font-weight="900" fill="#e60012">す</text>
+            <text x="38" y="27" font-family="'Noto Sans KR',sans-serif" font-size="15" font-weight="900" fill="#fff">すき家</text>
+            <text x="86" y="26" font-family="'Space Grotesk',sans-serif" font-size="8" font-weight="700" fill="#fff">SUKIYA</text>
+          </svg>
+        </div>
+        <div class="bname">스키야 <span class="jp">すき家</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%81%99%E3%81%8D%E5%AE%B6%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">점포 수 일본 1위 규동 체인. 식권기 거의 없고 <b>테이블에서 직접 주문</b>(점원 호출), 식사 후 카운터 결제. 미소시루 무료 포함. 토핑·사이드 종류가 다양해요.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 라멘·기타 외식 -->
+  <div class="tipcat">🍜 라멘·외식 체인</div>
+  <div class="info">
+    <div class="brandgrid">
+      <div class="brandcard">
+        <div class="bname">이치란 <span class="jp">一蘭</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E4%B8%80%E8%98%AD%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">돈코츠(돼지사골) 라멘의 대명사. <b>1인 칸막이석</b>과 종이 주문표(면 익힘·국물 농도·매운맛 선택)로 외국인에게 특히 유명. 관광지마다 있어요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">잇푸도 <span class="jp">一風堂</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E4%B8%80%E9%A2%A8%E5%A0%82%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">라멘 최초 미슐랭 등재로 유명한 하카타 돈코츠 라멘. 대표 메뉴는 '아카마루 신아지'. 이치란보다 매장이 넓고 사이드 메뉴도 풍부.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">텐야 <span class="jp">てんや</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%81%A6%E3%82%93%E3%82%84%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">저렴한 튀김덮밥(텐동) 체인. 500~700엔대에 바삭한 튀김덮밥을 즐길 수 있어 가성비 최고. 규동이 물릴 때 대안으로 좋아요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">코코이치방야 <span class="jp">CoCo壱番屋</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본식 카레 최대 체인(줄여서 '코코이치'). 매운맛 단계·토핑을 자유롭게 커스텀. 양 조절도 가능해 든든한 한 끼로 인기.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">사이제리야 <span class="jp">サイゼリヤ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%82%B5%E3%82%A4%E3%82%BC%E3%83%AA%E3%83%A4%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">초저가 이탈리안 패밀리 레스토랑. 파스타·피자·도리아가 300~500엔대. 양 많고 저렴해 학생들에게 인기 폭발. 단체로 앉아 먹기 좋아요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">모스버거 <span class="jp">モスバーガー</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%A2%E3%82%B9%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본식 수제버거 체인. 맥도날드보다 조금 비싸지만 신선하고 퀄리티 높음. 데리야키·라이스버거 등 일본 한정 메뉴가 매력.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 카페 -->
+  <div class="tipcat">☕ 카페 체인</div>
+  <div class="info">
+    <div class="brandgrid">
+      <div class="brandcard">
+        <div class="bname">도토루 <span class="jp">ドトール</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%89%E3%83%88%E3%83%BC%E3%83%AB%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본판 저가 커피 체인의 대표주자(1962년~). 어디에나 있고 커피 M사이즈 230~280엔대. 잠깐 쉬며 더위 식히기 좋아요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">고메다 커피 <span class="jp">コメダ珈琲</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%82%B3%E3%83%A1%E3%83%80%E7%8F%88%E7%90%B2%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">나고야식 킷사텐(다방) 체인. 두툼한 시로노와르(디저트)와 아침 세트(모닝 서비스)가 유명. 넓고 편안한 좌석.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">호시노커피 <span class="jp">星乃珈琲店</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E6%98%9F%E4%B9%83%E7%8F%88%E7%90%B2%E5%BA%97%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">폭신한 수플레 팬케이크로 유명한 클래식 감성 카페. 디저트 좋아하는 일행에게 추천.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">스타벅스 <span class="jp">スターバックス</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%90%E3%83%83%E3%82%AF%E3%82%B9%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본 한정 음료·굿즈·지역 텀블러가 많아요. 시부야 츠타야점 등 뷰 좋은 콘셉트 매장도 관광 포인트.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 쇼핑·드럭스토어 -->
+  <div class="tipcat">🛍️ 쇼핑 · 드럭스토어 · 잡화</div>
+  <div class="info">
+    <div class="brandgrid">
+      <div class="brandcard">
+        <span class="btag">면세 필수</span>
+        <div class="bname">돈키호테 <span class="jp">ドン・キホーテ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%89%E3%83%B3%E3%83%BB%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">종합 할인 잡화점의 끝판왕. 간식·화장품·의약품·전자기기까지 없는 게 없어요. <b>24시간 매장 많아 막차 후 야간 쇼핑</b>에 최적. 세금 제외 10,000엔↑ 구매 시 면세+추가 할인.</p>
+      </div>
+      <div class="brandcard">
+        <span class="btag">면세 필수</span>
+        <div class="bname">마츠모토키요시 <span class="jp">マツモトキヨシ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%9E%E3%83%84%E3%83%A2%E3%83%88%E3%82%AD%E3%83%A8%E3%82%B7%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본 최대 드럭스토어(줄여서 '마츠키요'). 의약품·화장품이 돈키보다 저렴한 경우 많음. 카베진·오타이산·비오레·로토 등 필수템 성지.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">선드럭 / 다이코쿠 <span class="jp">サンドラッグ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%82%B5%E3%83%B3%E3%83%89%E3%83%A9%E3%83%83%E3%82%B0%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">마츠키요와 함께 흔한 드럭스토어. 매장마다 할인 폭이 달라 번화가에서 가격 비교하는 재미가 있어요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">다이소 / 세리아 / 캔두 <span class="jp">100円ショップ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=100%E5%86%86%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">100엔샵(+세금). 캐릭터 문구·잡화·여행용품·간식까지. 세리아는 감성 디자인, 캔두도 인기. 기념품·선물 대량 구매에 좋아요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">유니클로 / GU <span class="jp">ユニクロ / ジーユー</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%A6%E3%83%8B%E3%82%AF%E3%83%AD%20/%20%E3%82%B8%E3%83%BC%E3%83%A6%E3%83%BC%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">일본 대표 SPA 브랜드. 일본이 본토라 한정 컬래버·가격이 매력. GU는 유니클로의 저가 라인으로 트렌디한 아이템이 저렴.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">무인양품 <span class="jp">無印良品 / MUJI</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81%20/%20MUJI%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">심플한 생활용품·문구·의류·식품. 일본 매장이 한국보다 라인업이 넓고 저렴한 품목이 많아요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">빅카메라 / 요도바시 <span class="jp">ビックカメラ / ヨドバシ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%93%E3%83%83%E3%82%AF%E3%82%AB%E3%83%A1%E3%83%A9%20/%20%E3%83%A8%E3%83%89%E3%83%90%E3%82%B7%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">대형 전자제품 양판점. 아키하바라 요도바시가 유명. 카메라·게임·가전·피규어까지. 면세 카운터 따로 있어요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">애니메이트 / 만다라케 <span class="jp">アニメイト / まんだらけ</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%A4%E3%83%88%20/%20%E3%81%BE%E3%82%93%E3%81%A0%E3%82%89%E3%81%91%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">애니·만화 굿즈 성지. <b>애니메이트</b>는 신상 공식 굿즈, <b>만다라케</b>는 중고·레어 아이템. 아키하바라·이케부쿠로에 대형 매장.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 편의점 -->
+  <div class="tipcat">🏪 편의점 (콘비니)</div>
+  <div class="info">
+    <div class="brandgrid">
+      <div class="brandcard">
+        <div class="bname">세븐일레븐 <span class="jp">セブン-イレブン</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%82%BB%E3%83%96%E3%83%B3-%E3%82%A4%E3%83%AC%E3%83%96%E3%83%B3%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">점포 수 1위. ATM(해외카드 인출 편리)·프린터·택배까지. '후와리 타마고산도'(계란 샌드위치)가 명물.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">패밀리마트 <span class="jp">ファミリーマート</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%95%E3%82%A1%E3%83%9F%E3%83%AA%E3%83%BC%E3%83%9E%E3%83%BC%E3%83%88%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">'파미치키'(프라이드 치킨)와 명란 크림파스타가 유명. PB 상품·간식 라인업이 강해요.</p>
+      </div>
+      <div class="brandcard">
+        <div class="bname">로손 <span class="jp">ローソン</span></div>
+        <a class="maplink" href="https://www.google.com/search?q=%E3%83%AD%E3%83%BC%E3%82%BD%E3%83%B3%20%E3%83%AD%E3%82%B4&tbm=isch" target="_blank">실제 로고 보기 ↗</a>
+        <p class="bdesc">프리미엄 롤케이크·디저트 강자. '가라아게쿤'(닭튀김) 필수. 파스모 충전·ATM도 편리.</p>
+      </div>
+    </div>
+    <p style="margin-top:12px;">💡 세 곳 모두 파스모(IC카드) 결제 가능 — 공동경비 정산에 좋아요. 숙소 간이 냉장고를 활용해 아침·야식을 미리 사두면 시간·비용 절약.</p>
+  </div>
+
+  <div class="info">
+    <h3>🧾 면세(Tax-Free) 받는 법</h3>
+    <p>같은 매장에서 같은 날 <b>세금 포함 5,500엔(세금 제외 5,000엔) 이상</b> 구매 시 소비세 10%를 면제받아요. 계산대에서 <b>실물 여권을 제시</b>하면 됩니다("택스프리 데스카?"라고 물어보면 확인 가능). 의약품·화장품·일용품과 식품은 면세 산정 기준이 다를 수 있어요. 돈키호테는 세금 제외 10,000엔 이상 시 추가 할인이 붙기도 해요. 면세품은 봉인 포장되며 원칙적으로 일본 출국 전 개봉 금지예요.</p>
+  </div>
+</section>
+
+
+<footer>
+  도쿄 여행 일정표 · 8/10(월) 11:00 나리타 도착 – 8/15(토) 20:25 진에어 출국 · 숙소: 다이토구 미스지
+</footer>
+
+<script>
+  // 코스 선택 (① 기본 / ② 에노시마-Day4 / ③ 에노시마-Day5)
+  document.querySelectorAll('input[name="course"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      updateCourse(this.value);
+    });
+  });
+
+  function updateCourse(course) {
+    const show = (id, on) => { document.getElementById(id).style.display = on ? 'block' : 'none'; };
+
+    // Day4: 코스②일 때만 에노시마
+    show('p4-original', course !== 'c2');
+    show('p4-enoshima', course === 'c2');
+
+    // Day5: 코스③일 때만 에노시마
+    show('p5-original', course !== 'c3');
+    show('p5-enoshima', course === 'c3');
+
+    // Day6: 코스③일 때만 보완형
+    show('p6-original', course !== 'c3');
+    show('p6-compensate', course === 'c3');
+
+    // 코스 카드 하이라이트
+    document.querySelectorAll('.cs-card').forEach(c => c.removeAttribute('data-active'));
+    document.getElementById('cs-' + course).setAttribute('data-active', 'true');
+
+    // 요일 탭(daynav) 라벨 텍스트 갱신
+    document.getElementById('nav-t4').textContent = (course === 'c2') ? '8/13 에노시마' : '8/13 시부야·신주쿠';
+    document.getElementById('nav-t5').textContent = (course === 'c3') ? '8/14 에노시마' : '8/14 도쿄역·긴자';
+
+    // 코스를 바꾸면 바뀐 날짜 탭으로 바로 이동해서 보여줌
+    if (course === 'c2') document.getElementById('t4').checked = true;
+    if (course === 'c3') document.getElementById('t5').checked = true;
+  }
+
+  // 페이지 로드시 기본 코스(①)로 초기화
+  updateCourse('c1');
+</script>
+
+</body>
+</html>
