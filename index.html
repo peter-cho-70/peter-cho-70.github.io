@@ -201,18 +201,30 @@
 // HEAD로 조회해 Last-Modified를 그대로 표시한다 — 이 허브 파일에 날짜를 손으로 적어두면
 // 프로젝트가 갱신돼도 여기서는 계속 옛 날짜로 남는 문제가 생기기 때문에, 실측값을 쓴다.
 (function(){
-  document.querySelectorAll('a.card[data-check]').forEach(function(card){
-    fetch(card.dataset.check, { method: 'HEAD' })
+  // 최신 갱신 순으로 카드 정렬 — 날짜를 못 가져온 카드와 개인(.card-pinned-last) 카드는 맨 아래.
+  var cards = Array.prototype.slice.call(document.querySelectorAll('a.card[data-check]'));
+  var grid = cards.length ? cards[0].parentNode : null;
+  Promise.all(cards.map(function(card, i){
+    card._order = i; card._ts = 0;
+    return fetch(card.dataset.check, { method: 'HEAD' })
       .then(function(r){
         var lm = r.headers.get('last-modified');
         if (!lm) return;
         var d = new Date(lm);
         if (isNaN(d.getTime())) return;
+        card._ts = d.getTime();
         var y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
         var el = card.querySelector('[data-updated]');
         if (el) el.textContent = '· 최종 갱신 ' + y + '-' + m + '-' + day;
       })
       .catch(function(){});
+  })).then(function(){
+    if (!grid) return;
+    var personal = cards.filter(function(c){ return c.getAttribute('href').indexOf('personal/') === 0; });
+    cards.filter(function(c){ return personal.indexOf(c) < 0; })
+      .sort(function(x, y){ return (y._ts - x._ts) || (x._order - y._order); })
+      .concat(personal)
+      .forEach(function(c){ grid.appendChild(c); });
   });
   var d = new Date(document.lastModified);
   if (!isNaN(d.getTime())) {
