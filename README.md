@@ -8,4 +8,4 @@
 
 새 프로젝트 문서 사이트를 추가하려면 `index.html`의 `.grid` 안에 카드를 하나 추가한다.
 
-> **루트(`/`)는 외국어 학습 페이지(`myremember-vault/language-study.html`)로 자동 이동한다** (2026-11-03). 이 허브 카드 목록은 https://peter-cho-70.github.io/?hub 로 연다. 카드 추가 방법(`index.html`의 `.grid`)은 그대로다.
+> 허브 맨 위 "외국어 학습" 카드는 `myremember-vault/language-study.html`(비밀번호 게이트)로 연결된다. 나머지 문서 사이트는 비밀번호 없이 공개. 이 카드는 `data-check`가 없어 자동 정렬 대상이 아니라 항상 맨 위에 남는다.
