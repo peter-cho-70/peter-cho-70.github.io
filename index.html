@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // 루트로 들어오면 곧바로 '외국어 학습'으로 이동한다. 프로젝트 문서 허브는 /?hub 로 열린다.
+  if (location.search.indexOf("hub") < 0) location.replace("myremember-vault/language-study.html");
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=myremember-vault/language-study.html"></noscript>
 <title>Peter Cho — 프로젝트 문서 허브</title>
 <style>
   :root{
